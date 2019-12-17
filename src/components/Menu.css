@@ -1,0 +1,18 @@
+.menu {
+    background: rgba(4, 8, 27, 0.7);
+    padding: 30px;
+    width: 30%;
+    margin: 1% 1% 0 60%;
+}
+
+.menu-inner {
+    border-top: 5px solid rgba(30, 88, 90, 1);
+    padding: 10px 0;
+}
+
+@media only screen and (max-width: 600px) {
+    .menu {
+        width: auto;
+        margin: 0;
+    }
+}

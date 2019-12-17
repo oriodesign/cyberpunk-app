@@ -1,0 +1,37 @@
+.role-option img {
+    display: block;
+}
+
+.role-option h1 {
+    color: white;
+    opacity: 0.8;
+    padding: 0;
+    margin: 0;
+    font-size: 22px;
+}
+
+.role-option h1 {
+    bottom: 20px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.role-option {
+    position: relative;
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+.role-option:hover {
+    opacity: 1;
+}
+
+@media only screen and (max-width: 600px) {
+    .role-option {
+        width: 200px;
+    }
+    .role-option img {
+        width: 200px;
+    }
+}

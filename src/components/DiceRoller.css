@@ -1,0 +1,16 @@
+.dice {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin: 0 5px 0 0;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.6);
+}
+
+.dice-roller {
+    display: flex;
+}

@@ -1,24 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { SelectRole } from './components/SelectRole';
+import { Character } from './model/character';
+import { Menu } from './components/Menu';
+import { CharacterPoints } from './components/CharacterPoints';
 
 const App: React.FC = () => {
+
+  const [character, setCharacter] = useState<Partial<Character>>({});
+  const [route, setRoute] = useState<string>("menu");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      {route === "menu" && <Menu setRoute={setRoute} />}
+      {route === "select-role" && <SelectRole setRoute={setRoute} character={character} setCharacter={setCharacter} />}
+      {route === "character-points" && <CharacterPoints setRoute={setRoute} character={character} setCharacter={setCharacter} />}
     </div>
   );
 }
