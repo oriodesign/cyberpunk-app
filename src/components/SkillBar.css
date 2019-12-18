@@ -7,6 +7,11 @@
     color: white;
 }
 
+.special-skill {
+    color: yellow;
+    font-weight: bold;
+}
+
 .skill-bar label {
     text-shadow: 0 0 3px rgba(255, 255, 255, 1);
     display: inline-block;
@@ -26,6 +31,7 @@
     width: 18px;
     margin-right: 2px;
     cursor: pointer;
+    background: rgba(4, 8, 27, 0.7);
 }
 
 .skill-block.filled {
@@ -80,4 +86,13 @@
     margin-left: 2px;
     border: none;
     text-align: left;
+}
+
+@media only screen and (max-width: 600px) {
+    .skill-num-box-value {
+        display: none;
+    }
+    .skill-num-box-value-stat-bonus {
+        display: none;
+    }
 }

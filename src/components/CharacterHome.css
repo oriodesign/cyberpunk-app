@@ -1,0 +1,24 @@
+.character-home {
+    padding: 30px;
+}
+
+.character-home .menu {
+    width: 300px;
+}
+
+.character-home .row {
+    justify-content: space-between;
+}
+
+.character-home .left-col {}
+
+.character-home .left-col {}
+
+@media only screen and (max-width: 600px) {
+    .character-home {
+        padding: 0;
+    }
+    .character-home .menu {
+        width: auto;
+    }
+}

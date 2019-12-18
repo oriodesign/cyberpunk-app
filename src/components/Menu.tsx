@@ -1,28 +1,33 @@
 import React, { FC } from 'react';
 import './Menu.css';
 import { MenuItem } from './MenuItem';
+import { Character } from '../model/character';
 
 type Props = {
     setRoute: (route: string) => void;
+    character: Partial<Character>
 }
 
-export const Menu: FC<Props> = ({ setRoute }) => {
+export const Menu: FC<Props> = ({ setRoute, character }) => {
+
+    const isSkillsDisabled = !character.statistics;
+
     return <div className="menu">
         <div className="menu-inner">
 
-            <MenuItem title="Role" route="select-role" setRoute={setRoute} />
+            <MenuItem disabled={false} title="Role" route="select-role" setRoute={setRoute} />
             <div className="menu-item-separator"></div>
 
-            <MenuItem title="Character Points" route="character-points" setRoute={setRoute} />
+            <MenuItem disabled={false} title="Character Points" route="character-points" setRoute={setRoute} />
             <div className="menu-item-separator"></div>
 
-            <MenuItem title="Skills" route="select-skills" setRoute={setRoute} />
+            <MenuItem disabled={isSkillsDisabled} title="Skills" route="select-skills" setRoute={setRoute} />
             <div className="menu-item-separator"></div>
 
-            <MenuItem title="Gear" route="select-gear" setRoute={setRoute} />
+            <MenuItem disabled={true} title="Gear" route="select-gear" setRoute={setRoute} />
             <div className="menu-item-separator"></div>
 
-            <MenuItem title="Cyberware" route="select-cyberware" setRoute={setRoute} />
+            <MenuItem disabled={true} title="Cyberware" route="select-cyberware" setRoute={setRoute} />
             <div className="menu-item-separator"></div>
         </div>
     </div>

@@ -18,6 +18,8 @@ export enum RoleIds {
     nomad = "nomad"
 }
 
+
+
 export const roles: Role[] = [
     {
         id: RoleIds.rockerboy,
@@ -105,3 +107,8 @@ export const roles: Role[] = [
         If a Nomad is in trouble, he can count on members of his family to watch his back.`
     },
 ];
+
+export const rolesTitlesMap: { [id: string]: string } = roles.reduce((acc, curr) => {
+    acc[curr.id] = curr.title;
+    return acc;
+}, {} as any);

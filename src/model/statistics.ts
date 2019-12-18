@@ -75,3 +75,8 @@ export const statisticsList: StatDetail[] = [
         description: "This Stat represent how well you relate to other living things - a measure of charisma and sympathetic emotions. In a world of alienated, future-shocked survivors, the ability to be human can no longer be taken for granted. Empathy (EM) is critical when leading, convincing, seducing or perceiving emotional undercurrents. Empathy is also a measure of how close he/she is to the line between feeling human being and cold blooded cyber-monster."
     }
 ];
+
+export const statsTitlesMap = statisticsList.reduce((acc, curr) => {
+    acc[curr.id] = curr.title;
+    return acc;
+}, {} as any);

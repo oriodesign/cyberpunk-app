@@ -38,7 +38,7 @@
     cursor: pointer;
 }
 
-.stat-value {
+.stat-bar-value {
     line-height: 44px;
     font-size: 30px;
     color: white;

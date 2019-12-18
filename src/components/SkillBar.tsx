@@ -27,7 +27,7 @@ export const SkillBar: FC<Props> = ({ skillDetail, value, pool, onChange, onClic
             return onChange(newValue);
         }
         // We are trying to increase
-        if ((pool - newValue) < 0) {
+        if ((pool - (newValue - value)) < 0) {
             return;
         }
         onChange(newValue);
@@ -35,7 +35,7 @@ export const SkillBar: FC<Props> = ({ skillDetail, value, pool, onChange, onClic
 
     return <div className="skill-bar-container">
         <div className="skill-bar">
-            <label onClick={() => onClick(skillDetail)}>{skillDetail.title}</label>
+            <label className={!!skillDetail.special ? "special-skill" : ""} onClick={() => onClick(skillDetail)}>{skillDetail.title} {!!skillDetail.special && " ★"}</label>
             {blocks.map((filled, index) => <div
                 onClick={() => onClickBlock(index)}
                 key={index}

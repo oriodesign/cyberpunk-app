@@ -33,7 +33,7 @@ export const StatBar: FC<Props> = ({ statDetail, value, onChange, pool, onClick 
 
     return <div className={`stat-bar-wrapper stat-value-${value}`}>
         <div className="stat-bar">
-            <div className="stat-value">{value}</div>
+            <div className="stat-bar-value">{value}</div>
             {blocks.map((filled, index) => <div key={index} className={filled ? `stat-block filled` : `stat-block empty empty-${index}`} />)}
             <div className="stat-buttons-wrapper">
                 <div onClick={plus} className="stat-plus">+</div>

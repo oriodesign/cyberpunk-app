@@ -6,3 +6,7 @@
     overflow: scroll;
     margin-bottom: 20px;
 }
+
+.focused-role h1 {
+    margin-bottom: 10px;
+}

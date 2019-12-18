@@ -1,8 +1,6 @@
 .menu {
     background: rgba(4, 8, 27, 0.7);
     padding: 30px;
-    width: 30%;
-    margin: 1% 1% 0 60%;
 }
 
 .menu-inner {
@@ -12,7 +10,6 @@
 
 @media only screen and (max-width: 600px) {
     .menu {
-        width: auto;
-        margin: 0;
+        padding: 10px;
     }
 }

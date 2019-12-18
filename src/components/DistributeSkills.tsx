@@ -18,13 +18,21 @@ export const DistributeSkills: FC<Props> = ({ character, setCharacter, setRoute 
     const [focusedSkill, setFocusedSkill] = useState<SkillDetail>();
     const focusedSkillStat = focusedSkill && focusedSkill.stat && statisticsList.find(s => s.id === focusedSkill.stat);
 
-    const [skills, setSkills] = useState<CharacterSkills>({});
+    const [skills, setSkills] = useState<CharacterSkills>(character.skills || {});
     const stats = character.statistics!!;
     const careerSkills = allSkillDetails.filter(s => s.career.some(cs => cs === character.role));
+    const pickupSkills = allSkillDetails.filter(s => !s.special && s.career.every(cs => cs !== character.role));
 
-    const usedPoints = Object.keys(skills).reduce((acc, curr) => acc + skills[curr], 0);
+    const usedCareerSkillPoints = Object.keys(skills)
+        .filter(skillId => careerSkills.some(sd => sd.id === skillId))
+        .reduce((acc, curr) => acc + skills[curr], 0);
 
-    const pool = MAX_POINTS - usedPoints;
+    const usedPickupSkillsPoints = Object.keys(skills)
+        .filter(skillId => pickupSkills.some(sd => sd.id === skillId))
+        .reduce((acc, curr) => acc + skills[curr], 0);
+
+    const careerSkillsPoints = MAX_POINTS - usedCareerSkillPoints;
+    const pickupSkillsPoints = character.statistics!!.reflexes + character.statistics!!.intelligence - usedPickupSkillsPoints;
 
     function onChange(id: string, value: number) {
         setSkills({
@@ -51,21 +59,40 @@ export const DistributeSkills: FC<Props> = ({ character, setCharacter, setRoute 
 
         <div className="separator" />
 
-        <h2>Career points left {pool}</h2>
+        <div className="row">
+            <div className="left-col">
 
-        <p>Distribute your points in your career skills.</p>
 
-        <div className="separator" />
+                <h2>Career points left {careerSkillsPoints}</h2>
 
-        {careerSkills.map(cs => <SkillBar
-            key={cs.id}
-            onChange={(value) => onChange(cs.id, value)}
-            onClick={onClick}
-            skillDetail={cs}
-            bonus={cs.stat ? stats[cs.stat] : 0}
-            value={skills[cs.id] || 0}
-            pool={pool} />)}
+                <div className="separator" />
 
+                {careerSkills.map(cs => <SkillBar
+                    key={cs.id}
+                    onChange={(value) => onChange(cs.id, value)}
+                    onClick={onClick}
+                    skillDetail={cs}
+                    bonus={cs.stat ? stats[cs.stat] : 0}
+                    value={skills[cs.id] || 0}
+                    pool={careerSkillsPoints} />)}
+
+            </div>
+            <div className="right-col">
+                <h2>Pickup points left {pickupSkillsPoints}</h2>
+
+                <div className="separator" />
+
+                {pickupSkills.map(s => <SkillBar
+                    key={s.id}
+                    onChange={(value) => onChange(s.id, value)}
+                    onClick={onClick}
+                    skillDetail={s}
+                    bonus={s.stat ? stats[s.stat] : 0}
+                    value={skills[s.id] || 0}
+                    pool={pickupSkillsPoints} />)}
+
+            </div>
+        </div>
 
         <div className="separator" />
 
@@ -81,7 +108,7 @@ export const DistributeSkills: FC<Props> = ({ character, setCharacter, setRoute 
 
         <div>
             <button className="neon-button danger" onClick={() => setRoute("menu")}>Cancel</button>
-            {pool === 0 && <button className="neon-button" onClick={() => onConfirm()}>Confirm</button>}
+            {careerSkillsPoints === 0 && pickupSkillsPoints === 0 && <button className="neon-button" onClick={() => onConfirm()}>Confirm</button>}
         </div>
 
     </div>

@@ -3,6 +3,7 @@ import { roles, Role } from '../model/role';
 import { RoleOption } from './RoleOption';
 import { Character } from '../model/character';
 import './SelectRole.css';
+import { allSkillDetails } from '../model/skills';
 type Props = {
     character: Partial<Character>;
     setCharacter: (c: Partial<Character>) => void;
@@ -16,6 +17,7 @@ export const SelectRole: FC<Props> = ({ character, setCharacter, setRoute }) => 
     function setRole(role: Role) {
         setCharacter({
             ...character,
+            skills: undefined,
             role: role.id
         });
         setRoute("menu");
@@ -47,6 +49,10 @@ export const SelectRole: FC<Props> = ({ character, setCharacter, setRoute }) => 
                 <h1>{focusedRole.title}</h1>
                 <h2>{focusedRole.subtitle}</h2>
                 <p>{focusedRole.description}</p>
+                <p><strong>Career Skills: </strong>{allSkillDetails.filter(s => s.career.some(cs => cs === focusedRole.id)).map(s => s.title).join(", ")}.</p>
+
+                <div className="separator" />
+
                 <div>
                     <button className="neon-button danger" onClick={() => setFocusedRole(undefined)}>Cancel</button>
                     <button className="neon-button" onClick={() => setRole(focusedRole)}>Confirm</button>

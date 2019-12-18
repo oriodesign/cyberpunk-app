@@ -2,7 +2,7 @@
     display: block;
 }
 
-.menu-item.neon-button:hover {
+.menu-item.neon-button:hover:not(.disabled) {
     display: block;
     border-left: 10px solid rgba(259, 252, 68, 1);
 }
@@ -24,6 +24,10 @@
     font-weight: bold;
 }
 
+.neon-button.disabled {
+    opacity: 0.5;
+}
+
 .neon-button.danger {
     box-shadow: 0 0 15px rgba(211, 69, 98, 0.3);
     border: 1px solid rgba(211, 69, 98, 0.8);
@@ -38,7 +42,7 @@
     text-shadow: 0 0 15px rgba(211, 69, 98, 0.3);
 }
 
-.neon-button:hover {
+.neon-button:hover:not(.disabled) {
     color: rgba(259, 252, 68, 1);
     text-shadow: 0 0 3px rgba(259, 252, 68);
     border: 1px solid rgba(259, 252, 68, 1);
