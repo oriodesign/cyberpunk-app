@@ -16,7 +16,7 @@ export const SelectRole: FC<Props> = ({ character, setCharacter, setRoute }) => 
     function setRole(role: Role) {
         setCharacter({
             ...character,
-            role
+            role: role.id
         });
         setRoute("menu");
         setFocusedRole(undefined);
@@ -35,7 +35,7 @@ export const SelectRole: FC<Props> = ({ character, setCharacter, setRoute }) => 
 
                 </div>
             </div>
-            <button className="neon-button" onClick={() => setRoute("menu")}>Back</button>
+            <button className="neon-button danger" onClick={() => setRoute("menu")}>Cancel</button>
         </div>}
 
 
@@ -48,7 +48,7 @@ export const SelectRole: FC<Props> = ({ character, setCharacter, setRoute }) => 
                 <h2>{focusedRole.subtitle}</h2>
                 <p>{focusedRole.description}</p>
                 <div>
-                    <button className="neon-button" onClick={() => setFocusedRole(undefined)}>Cancel</button>
+                    <button className="neon-button danger" onClick={() => setFocusedRole(undefined)}>Cancel</button>
                     <button className="neon-button" onClick={() => setRole(focusedRole)}>Confirm</button>
                 </div>
             </div>

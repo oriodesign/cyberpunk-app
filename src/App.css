@@ -5,7 +5,7 @@ body {
   background-size: cover;
 }
 
-h1, h2 {
+h1, h2, h3 {
   margin: 0;
   padding: 0;
   color: white;
@@ -31,18 +31,38 @@ p {
 }
 
 .left-col {
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 .right-col {
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 .separator {
   height: 20px;
 }
 
+.sidepanel {
+  width: 300px;
+  padding: 30px;
+  background: rgba(4, 8, 27, 0.9);
+  position: fixed;
+  right: 0;
+  height: 100%;
+  top: 0;
+  border-left: 1px solid rgba(161, 247, 251, 1);
+  box-shadow: 0 0 5px rgb(161, 247, 251);
+}
+
 @media only screen and (max-width: 600px) {
+  h1 {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  h2 {
+    font-size: 18px;
+    line-height: 22px;
+  }
   .row {
     display: block;
   }
@@ -54,5 +74,8 @@ p {
   }
   .hide-mobile {
     display: none;
+  }
+  .page {
+    padding: 10px;
   }
 }

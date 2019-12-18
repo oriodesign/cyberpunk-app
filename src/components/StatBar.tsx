@@ -1,15 +1,16 @@
 import React, { FC } from "react";
 import './StatBar.css';
+import { StatDetail } from "../model/statistics";
 
 type Props = {
-    id: string;
-    title: string;
+    statDetail: StatDetail;
     value: number;
     pool: number;
     onChange: (value: number) => void;
+    onClick: (s: StatDetail) => void;
 };
 
-export const StatBar: FC<Props> = ({ id, value, onChange, pool, title }) => {
+export const StatBar: FC<Props> = ({ statDetail, value, onChange, pool, onClick }) => {
 
     const blocks: boolean[] = [...Array(value).fill(true), ...Array(10 - value).fill(false)];
 
@@ -22,8 +23,9 @@ export const StatBar: FC<Props> = ({ id, value, onChange, pool, title }) => {
         }
         onChange(value + 1);
     }
+
     function minus() {
-        if (value < 1) {
+        if (value < 3) {
             return;
         }
         onChange(value - 1);
@@ -39,8 +41,8 @@ export const StatBar: FC<Props> = ({ id, value, onChange, pool, title }) => {
             </div>
         </div>
         <div className="stat-title-wrapper">
-            <h2>{title}</h2>
-            <img src={`/img/stats/${id}.svg`} />
+            <h2 onClick={() => onClick(statDetail)}>{statDetail.title}</h2>
+            <img alt={statDetail.title} onClick={() => onClick(statDetail)} src={`/img/stats/${statDetail.id}.svg`} />
         </div>
 
     </div>

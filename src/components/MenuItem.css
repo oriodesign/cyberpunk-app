@@ -24,6 +24,20 @@
     font-weight: bold;
 }
 
+.neon-button.danger {
+    box-shadow: 0 0 15px rgba(211, 69, 98, 0.3);
+    border: 1px solid rgba(211, 69, 98, 0.8);
+    color: rgba(211, 69, 98, 0.8);
+    text-shadow: 0 0 15px rgba(211, 69, 98, 0.3);
+}
+
+.neon-button.danger:hover {
+    box-shadow: 0 0 15px rgba(211, 69, 98, 0.7);
+    border: 1px solid rgba(211, 69, 98, 1);
+    color: rgba(211, 69, 98, 1);
+    text-shadow: 0 0 15px rgba(211, 69, 98, 0.3);
+}
+
 .neon-button:hover {
     color: rgba(259, 252, 68, 1);
     text-shadow: 0 0 3px rgba(259, 252, 68);

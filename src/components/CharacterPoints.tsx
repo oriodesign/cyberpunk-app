@@ -1,45 +1,22 @@
 import React, { FC, useState } from 'react';
 import './CharacterPoints.css';
-import { Character, CharacterStatistics } from '../model/character';
-import { statisticsList } from '../model/statistics';
+import { Character } from '../model/character';
 import { DiceRoller } from './DiceRoller';
-import { StatBar } from './StatBar';
-
-
 
 type Props = {
     character: Partial<Character>;
-    setCharacter: (c: Character) => void;
+    setCharacter: (c: Partial<Character>) => void;
     setRoute: (c: string) => void;
 }
 
 export const CharacterPoints: FC<Props> = ({ setRoute, character, setCharacter }) => {
 
     const [total, setTotal] = useState<number>(0);
-    const [statistics, setStatistics] = useState<CharacterStatistics>({
-        intelligence: 0,
-        reflexes: 0,
-        cool: 0,
-        technicalAbility: 0,
-        luck: 0,
-        attractiveness: 0,
-        movementAllowance: 0,
-        empathy: 0,
-        bodyType: 0,
-    });
 
-
-    const usedPoints = statisticsList.reduce((acc, curr) => (statistics as any)[curr.id] + acc, 0);
-    const pointsAvailable = total - usedPoints;
-
-    function onRolled(result: number) {
-        setTotal(result);
-    }
-
-    function onStatChange(id: string, value: number) {
-        setStatistics({
-            ...statistics,
-            [id]: value
+    function onConfirm() {
+        setCharacter({
+            ...character,
+            statsPoints: total
         });
     }
 
@@ -47,21 +24,26 @@ export const CharacterPoints: FC<Props> = ({ setRoute, character, setCharacter }
 
         <h1 className="page-title">Character Points</h1>
 
-        <DiceRoller min={1} max={10} count={9} onRolled={onRolled} />
+        <p>You must roll 9d10 to determine your total Character Points.</p>
 
-        {!!total && <p>Result: <span>{total}</span> Available: <span>{pointsAvailable}</span></p>}
-
-        {!!total && <div className="stat-section">
-            {statisticsList.map(s => <StatBar
-                onChange={(value) => onStatChange(s.id, value)}
-                id={s.id}
-                title={s.title}
-                value={(statistics as any)[s.id]}
-                pool={pointsAvailable} />)}
-        </div>}
+        <p>Character Points are the "cash" of character creation.<br />
+            You can use them to buy the various mechanics aspect of the character like good looks and a strong body.
+        </p>
 
         <div className="separator" />
 
-        <button className="neon-button" onClick={() => setRoute("menu")}>Back</button>
+        <DiceRoller min={1} max={10} count={9} onRolled={setTotal} />
+
+        <div className="separator" />
+
+        {!!total && <p>You have <strong>{total}</strong> character points!</p>}
+
+        <div className="separator" />
+
+        <div>
+            <button className="neon-button danger" onClick={() => setRoute("menu")}>Back</button>
+            {!!total && <button className="neon-button" onClick={onConfirm}>Confirm</button>}
+        </div>
+
     </div>
 };

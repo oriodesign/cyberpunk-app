@@ -1,0 +1,58 @@
+.stat-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.total-points-left {
+    font-size: 20px;
+}
+
+.distribute-stats .page-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-points-left strong {
+    font-size: 80px;
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+}
+
+.derived-stats-section {
+    color: white;
+    padding: 20px;
+    border: 1px solid rgba(30, 88, 90, 1);
+    opacity: 0.9;
+    min-width: 220px;
+}
+
+.derived-stats-section h2 {
+    font-size: 14px;
+    padding-bottom: 10px;
+}
+
+.derived-stats-section h3 {
+    font-size: 12px;
+    padding-right: 8px;
+}
+
+.derived-stats-section span {
+    font-size: 12px;
+}
+
+.derived-stats-section article {
+    display: flex;
+    padding-bottom: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+    .total-points-left span {
+        display: none;
+    }
+    .total-points-left strong {
+        font-size: 30px;
+    }
+}

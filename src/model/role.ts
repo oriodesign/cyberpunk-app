@@ -1,13 +1,26 @@
 export type Role = {
-    id: string;
+    id: RoleIds;
     title: string;
     subtitle: string;
     description: string;
 };
 
+export enum RoleIds {
+    rockerboy = "rockerboy",
+    solo = "solo",
+    netrunner = "netrunner",
+    corporate = "corporate",
+    techie = "techie",
+    medtechie = "medtechie",
+    cop = "cop",
+    fixer = "fixer",
+    media = "media",
+    nomad = "nomad"
+}
+
 export const roles: Role[] = [
     {
-        id: "rockerboy",
+        id: RoleIds.rockerboy,
         title: "Rockerboy",
         subtitle: "Rebel rockers who use music and revolt to fight autorities",
         description: `They are a lot like '80s punk rockers who look down on corporate "sellouts" 
@@ -16,14 +29,14 @@ export const roles: Role[] = [
         through musical performances.`
     },
     {
-        id: "solo",
+        id: RoleIds.solo,
         title: "Solo",
         subtitle: "Hired hit-men, bodyguards, and mercenaries",
         description: `Due to their professionalism and constant training, 
         they have the ability to perceive danger, notice traps, and have an almost unearthly ability to avoid harm.`
     },
     {
-        id: "netrunner",
+        id: RoleIds.netrunner,
         title: "Netrunner",
         subtitle: "Cybernetic computer hackers",
         description: `Netrunners are the types of savvy computer hackers you would find in the movie Hackers,
@@ -35,28 +48,35 @@ export const roles: Role[] = [
         to Locate Remote, Run Software, Control Remote, LDL Link, Load, Create and Delete.`
     },
     {
-        id: "corporate",
+        id: RoleIds.corporate,
         title: "Corporate",
         subtitle: "Slick business raiders and multi millionaires",
         description: `Corporates are the Armani-wearing, Machiavellian mega-yuppies you see in the RoboCop films. 
         Being wealthy and persuasive, they can muster favors and resources beyond what most people can even hope.`
     },
     {
-        id: "techie",
+        id: RoleIds.techie,
         title: "Techie",
-        subtitle: "Renegate mechanics and doctors",
+        subtitle: "Renegate mechanics",
         description: `Techies range from technicians to cybernetic specialists. 
         They are usually underground techies, who do "off-the-record" work.`
     },
     {
-        id: "cop",
+        id: RoleIds.medtechie,
+        title: "Medtechie",
+        subtitle: "Renegate doctors",
+        description: `Techies range from technicians to cybernetic specialists. 
+        They are usually underground techies, who do "off-the-record" work.`
+    },
+    {
+        id: RoleIds.cop,
         title: "Cop",
         subtitle: "Private detectives, beat cops and government agents",
         description: `As figures of authority, they have the ability to intimidate or control others through 
         their position as lawmen`
     },
     {
-        id: "fixer",
+        id: RoleIds.fixer,
         title: "Fixer",
         subtitle: "Deal-makers, smugglers and information brokers",
         description: `Fixers are the well-connected fencers, smugglers, 
@@ -67,7 +87,7 @@ export const roles: Role[] = [
          decoys and fakes so as to maximize confusion.`
     },
     {
-        id: "media",
+        id: RoleIds.media,
         title: "Media",
         subtitle: "Newsmen and reporter who go to the wall for the truth",
         description: `Media can range from desperate, attention-loving sensationalists to demagogues, 
@@ -76,7 +96,7 @@ export const roles: Role[] = [
         people believe what they are saying, even if there are no facts to back-up what they are saying.`
     },
     {
-        id: "nomad",
+        id: RoleIds.nomad,
         title: "Nomad",
         subtitle: "Road warriors and gypsies who roam the highway",
         description: `Nomads were once corporate wage-slaves, who got fired and blackballed from employment, 
