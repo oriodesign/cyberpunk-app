@@ -5,7 +5,7 @@ import { Character } from '../model/character';
 import './SelectRole.css';
 type Props = {
     character: Partial<Character>;
-    setCharacter: (c: Character) => void;
+    setCharacter: (c: Partial<Character>) => void;
     setRoute: (c: string) => void;
 };
 

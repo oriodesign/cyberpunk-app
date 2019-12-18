@@ -1,54 +1,34 @@
-import React, { FC, useState, useRef } from 'react';
+import React, { FC, useState } from 'react';
 import './DiceRoller.css';
+import { Dice } from './Dice';
 
 type Props = {
     count: number;
-    sides: number;
+    min: number;
+    max: number;
     onRolled: (result: number) => void;
 }
 
-function getRandomInt(min: number, max: number) {
-    return Math.round(Math.random() * (max - min) + min);
-}
+export const DiceRoller: FC<Props> = ({ count, min, max, onRolled }) => {
 
-const MAX_ITERATION = 100;
+    const [areRolling, setAreRolling] = useState(false);
+    const [results] = useState(Array(count).fill(0));
 
-function ease(timeFraction: number) {
-    return 1 - Math.sin(Math.acos(timeFraction));
-}
+    function onDieRolled(index: number, value: number) {
+        results[index] = value;
 
-export const DiceRoller: FC<Props> = ({ count, sides, onRolled }) => {
-
-    const [dice, setDice] = useState(Array(count).fill(0));
-    const iteration = useRef(0);
-
-
-    function roll() {
-        if (iteration.current > MAX_ITERATION) {
-            onRolled(1);
-            iteration.current = 0;
-            return;
+        if (results.every(r => r !== 0)) {
+            const total = results.reduce((acc, curr) => acc + curr, 0);
+            onRolled(total)
         }
-
-        const t = ease(iteration.current / 100) * 500;
-
-        setTimeout(() => {
-            setDice(dice.map((d, i) => {
-                if (i > iteration.current) {
-                    return d;
-                }
-
-                return getRandomInt(1, sides)
-            }));
-            iteration.current = iteration.current + 1;
-            roll();
-        }, t + 30);
     }
 
     return <div className="dice-roller">
         {
-            dice.map((d, i) => <div key={i} className="dice">{d}</div>)
+            areRolling && results.map((d, i) => <Dice key={i} min={min} max={max} onRolled={v => onDieRolled(i, v)} />)
         }
-        {iteration.current === 0 && <button className="neon-button" onClick={() => roll()}>Roll!</button>}
+        {!areRolling && <button className="neon-button" onClick={() => setAreRolling(true)}>Roll!</button>}
+
+
     </div>
 };

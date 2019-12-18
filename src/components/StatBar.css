@@ -1,0 +1,105 @@
+.stat-bar {
+    border: 1px solid rgba(30, 88, 90, 1);
+    padding: 5px;
+    display: flex;
+    background: rgba(4, 8, 27, 0.7);
+}
+
+.stat-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat-title-wrapper img {
+    height: 22px;
+    width: 22px;
+    padding: 8px;
+}
+
+.stat-bar-wrapper {
+    margin-bottom: 10px;
+}
+
+.stat-bar-wrapper h2 {
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+.stat-plus, .stat-minus {
+    height: 20px;
+    width: 20px;
+    line-height: 18px;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    text-align: center;
+    cursor: pointer;
+}
+
+.stat-value {
+    line-height: 44px;
+    font-size: 30px;
+    color: white;
+    display: inline-block;
+    width: 40px;
+    padding-right: 5px;
+    text-align: center;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+}
+
+.stat-buttons-wrapper {
+    display: inline-block;
+    margin-left: 2px;
+}
+
+.stat-minus {}
+
+.stat-plus {
+    margin-bottom: 2px;
+}
+
+.stat-block {
+    height: 44px;
+    width: 20px;
+    display: inline-block;
+    margin: 0 2px;
+}
+
+.stat-block.filled {
+    box-shadow: 0 0 15px rgba(259, 252, 68, 1);
+    background: rgba(259, 252, 68, 1);
+    border: 1px solid rgba(259, 252, 68, 1);
+    transition: background-color 0.5s;
+}
+
+.stat-value-1 .stat-block.filled, .stat-value-2 .stat-block.filled {
+    box-shadow: 0 0 15px rgba(211, 69, 98, 1);
+    background: rgba(211, 69, 98, 1);
+    border: 1px solid rgba(211, 69, 98, 1);
+}
+
+.stat-value-3 .stat-block.filled, .stat-value-4 .stat-block.filled {
+    box-shadow: 0 0 15px rgba(159, 131, 206, 1);
+    background: rgba(159, 131, 206, 1);
+    border: 1px solid rgba(159, 131, 206, 1);
+}
+
+.stat-value-5 .stat-block.filled, .stat-value-6 .stat-block.filled {
+    box-shadow: 0 0 15px rgba(42, 233, 242, 1);
+    background: rgba(42, 233, 242, 1);
+    border: 1px solid rgba(42, 233, 242, 1);
+}
+
+.stat-value-7 .stat-block.filled, .stat-value-8 .stat-block.filled {
+    box-shadow: 0 0 15px rgba(42, 233, 242, 1);
+    background: rgba(42, 233, 242, 1);
+    border: 1px solid rgba(42, 233, 242, 1);
+}
+
+.stat-block.empty {
+    border: 1px solid rgba(30, 88, 90, 1);
+}
+
+.stat-value-0 .stat-block.empty-0 {
+    box-shadow: 0 0 15px rgba(211, 69, 98, 0.3);
+    border: 1px solid rgba(211, 69, 98, 1);
+}

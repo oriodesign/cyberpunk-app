@@ -38,6 +38,10 @@ p {
   margin-left: 20px;
 }
 
+.separator {
+  height: 20px;
+}
+
 @media only screen and (max-width: 600px) {
   .row {
     display: block;
