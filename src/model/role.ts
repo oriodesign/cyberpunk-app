@@ -1,24 +1,24 @@
+export type Roles = "rockerboy" | "solo" | "netrunner" | "corporate" | "techie" | "medtechie" | "cop" | "fixer" | "media" | "nomad";
+
 export type Role = {
-    id: RoleIds;
+    id: Roles;
     title: string;
     subtitle: string;
     description: string;
 };
 
-export enum RoleIds {
-    rockerboy = "rockerboy",
-    solo = "solo",
-    netrunner = "netrunner",
-    corporate = "corporate",
-    techie = "techie",
-    medtechie = "medtechie",
-    cop = "cop",
-    fixer = "fixer",
-    media = "media",
-    nomad = "nomad"
+export const RoleIds: { [id: string]: Roles } = {
+    rockerboy: "rockerboy",
+    solo: "solo",
+    netrunner: "netrunner",
+    corporate: "corporate",
+    techie: "techie",
+    medtechie: "medtechie",
+    cop: "cop",
+    fixer: "fixer",
+    media: "media",
+    nomad: "nomad"
 }
-
-
 
 export const roles: Role[] = [
     {
@@ -112,3 +112,4 @@ export const rolesTitlesMap: { [id: string]: string } = roles.reduce((acc, curr)
     acc[curr.id] = curr.title;
     return acc;
 }, {} as any);
+

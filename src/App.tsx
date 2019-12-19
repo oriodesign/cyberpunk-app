@@ -6,11 +6,12 @@ import { CharacterPoints } from './components/CharacterPoints';
 import { DistributeStats } from './components/DistributeStats';
 import { DistributeSkills } from './components/DistributeSkills';
 import { CharacterHome } from './components/CharacterHome';
-import { RoleIds } from './model/role';
+import { SelectGear } from './components/SelectGear';
 
 const App: React.FC = () => {
 
-  const [character, setCharacter] = useState<Partial<Character>>({});
+  const [character, setCharacter] = useState<Partial<Character>>({
+  });
   const [route, setRoute] = useState<string>("menu");
 
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
       {route === "character-points" && !character.statsPoints && <CharacterPoints setRoute={setRoute} character={character} setCharacter={setCharacter} />}
       {route === "character-points" && !!character.statsPoints && <DistributeStats setRoute={setRoute} character={character} setCharacter={setCharacter} />}
       {route === "select-skills" && !!character.statsPoints && !!character.role && <DistributeSkills setRoute={setRoute} character={character} setCharacter={setCharacter} />}
+      {route === "select-gear" && <SelectGear character={character} setCharacter={setCharacter} />}
     </div>
   );
 }

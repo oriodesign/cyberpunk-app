@@ -1,10 +1,12 @@
-import { RoleIds } from "./role";
+import { Roles } from "./role";
 
 export type Character = {
-    role: RoleIds;
+    role: Roles;
     statsPoints: number;
     statistics: CharacterStatistics;
     skills: CharacterSkills;
+    cash: number;
+    job: string;
 };
 
 export type CharacterSkills = {

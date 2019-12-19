@@ -4,6 +4,7 @@ import { Character, CharacterSkills } from '../model/character';
 import { allSkillDetails, SkillDetail } from '../model/skills';
 import { SkillBar } from './SkillBar';
 import { statisticsList } from '../model/statistics';
+import { getStartingCash, getStartingJobTitle } from '../repository/characterRepository';
 
 type Props = {
     character: Partial<Character>;
@@ -34,6 +35,10 @@ export const DistributeSkills: FC<Props> = ({ character, setCharacter, setRoute 
     const careerSkillsPoints = MAX_POINTS - usedCareerSkillPoints;
     const pickupSkillsPoints = character.statistics!!.reflexes + character.statistics!!.intelligence - usedPickupSkillsPoints;
 
+    const startingCash = getStartingCash(character.role!!, skills);
+    const startingJob = getStartingJobTitle(character.role!!, skills);
+
+
     function onChange(id: string, value: number) {
         setSkills({
             ...skills,
@@ -47,7 +52,9 @@ export const DistributeSkills: FC<Props> = ({ character, setCharacter, setRoute 
     function onConfirm() {
         setCharacter({
             ...character,
-            skills: { ...skills }
+            skills: { ...skills },
+            cash: startingCash,
+            job: startingJob
         });
         setRoute("menu");
     }
@@ -62,7 +69,6 @@ export const DistributeSkills: FC<Props> = ({ character, setCharacter, setRoute 
         <div className="row">
             <div className="left-col">
 
-
                 <h2>Career points left {careerSkillsPoints}</h2>
 
                 <div className="separator" />
@@ -75,6 +81,10 @@ export const DistributeSkills: FC<Props> = ({ character, setCharacter, setRoute 
                     bonus={cs.stat ? stats[cs.stat] : 0}
                     value={skills[cs.id] || 0}
                     pool={careerSkillsPoints} />)}
+
+                <p>Based on your Career skill you will start with <strong>{startingCash}$</strong>.</p>
+
+                <p>Based on your score your occupation is likely to be: <strong>{startingJob}</strong>.</p>
 
             </div>
             <div className="right-col">

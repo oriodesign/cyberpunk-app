@@ -1,13 +1,13 @@
 import { StatIds } from "./statistics";
-import { RoleIds } from "./role";
+import { Roles, RoleIds } from "./role";
 
 export type SkillDetail = {
     id: string;
     title: string;
     description: string;
     stat?: StatIds;
-    special?: RoleIds;
-    career: RoleIds[];
+    special?: Roles;
+    career: Roles[];
 };
 
 export const specialSkillsDetails = [

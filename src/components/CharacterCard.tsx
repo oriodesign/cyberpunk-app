@@ -13,6 +13,10 @@ export const CharacterCard: FC<Props> = ({ character }) => {
     return <div className="character-card">
         {character.role && <p><strong>Role: </strong>{rolesTitlesMap[character.role]}</p>}
 
+        {character.job && <p><strong></strong>{character.job}</p>}
+
+        {character.cash && <p><strong></strong>{character.cash}$</p>}
+
         {character.statistics && Object.keys(character.statistics).map(id => {
             return <div className="stat-value-line">
                 <span className="stat-value-line-title">{(statAbbr as any)[id]}</span> <StatValue value={(character.statistics as any)[id]} />
