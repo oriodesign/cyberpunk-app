@@ -7,9 +7,14 @@ export type Character = {
     skills: CharacterSkills;
     cash: number;
     job: string;
+    inventory: CharacterInventory;
 };
 
 export type CharacterSkills = {
+    [id: string]: number;
+};
+
+export type CharacterInventory = {
     [id: string]: number;
 };
 

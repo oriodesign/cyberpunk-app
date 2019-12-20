@@ -1,8 +1,7 @@
 import React, { FC, useState } from 'react';
 import './SelectGear.css';
-import { Character } from '../model/character';
+import { Character, CharacterInventory } from '../model/character';
 import { GearType, shopInventory, Weapon, Item, Armor, allItemsById } from '../model/gear';
-import { getStartingCash } from '../repository/characterRepository';
 
 type Props = {
     character: Partial<Character>;
@@ -17,14 +16,10 @@ const reliabilityMap = {
     [""]: ""
 }
 
-type Cart = {
-    [id: string]: number;
-};
-
 export const SelectGear: FC<Props> = ({ character, setCharacter, setRoute }) => {
 
     const [gearType, setGearType] = useState<GearType>("pistol");
-    const [cart, setCart] = useState<Cart>({});
+    const [cart, setCart] = useState<CharacterInventory>(character.inventory || {});
     const [focusedItem, setFocusedItem] = useState<Item>();
 
     const items = shopInventory[gearType];
@@ -53,9 +48,11 @@ export const SelectGear: FC<Props> = ({ character, setCharacter, setRoute }) => 
         return acc + item.cost * cart[curr];
     }, 0);
 
-    const startingCash = getStartingCash(character.role!!, character.skills!!);
-
     function onConfirm() {
+        setCharacter({
+            ...character,
+            cash: character.cash!! - cartTotal
+        });
         setRoute("menu");
     }
 
@@ -166,7 +163,7 @@ export const SelectGear: FC<Props> = ({ character, setCharacter, setRoute }) => 
 
             <div className="right-col">
 
-                <div className="cash-display">{startingCash - cartTotal}$</div>
+                <div className="cash-display">{character.cash!! - cartTotal}$</div>
 
                 {Object.keys(cart).length > 0 && <div className="cart">
                     <h1>Cart</h1>
