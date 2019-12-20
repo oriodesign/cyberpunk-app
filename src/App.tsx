@@ -11,6 +11,9 @@ import { SelectGear } from './components/SelectGear';
 const App: React.FC = () => {
 
   const [character, setCharacter] = useState<Partial<Character>>({
+    role: "solo",
+    statsPoints: 18,
+    cash: 1000
   });
   const [route, setRoute] = useState<string>("menu");
 
@@ -21,7 +24,7 @@ const App: React.FC = () => {
       {route === "character-points" && !character.statsPoints && <CharacterPoints setRoute={setRoute} character={character} setCharacter={setCharacter} />}
       {route === "character-points" && !!character.statsPoints && <DistributeStats setRoute={setRoute} character={character} setCharacter={setCharacter} />}
       {route === "select-skills" && !!character.statsPoints && !!character.role && <DistributeSkills setRoute={setRoute} character={character} setCharacter={setCharacter} />}
-      {route === "select-gear" && <SelectGear character={character} setCharacter={setCharacter} />}
+      {route === "select-gear" && <SelectGear setRoute={setRoute} character={character} setCharacter={setCharacter} />}
     </div>
   );
 }

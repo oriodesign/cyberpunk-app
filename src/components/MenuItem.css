@@ -24,6 +24,12 @@
     font-weight: bold;
 }
 
+.neon-button.small {
+    padding: 8px;
+    font-size: 13px;
+    text-shadow: 0 0 2px rgba(161, 247, 251, 0.5);
+}
+
 .neon-button.disabled {
     opacity: 0.5;
 }
