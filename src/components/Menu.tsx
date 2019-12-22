@@ -12,6 +12,7 @@ export const Menu: FC<Props> = ({ setRoute, character }) => {
 
     const isSkillsDisabled = !character.statistics;
     const isGearDisabled = !character.cash;
+    const isCyberwearDisabled = !character.cash;
 
     return <div className="menu">
         <div className="menu-inner">
@@ -28,7 +29,7 @@ export const Menu: FC<Props> = ({ setRoute, character }) => {
             <MenuItem disabled={isGearDisabled} title="Gear" route="select-gear" setRoute={setRoute} />
             <div className="menu-item-separator"></div>
 
-            <MenuItem disabled={true} title="Cyberware" route="select-cyberware" setRoute={setRoute} />
+            <MenuItem disabled={isCyberwearDisabled} title="Cyberware" route="select-cyberware" setRoute={setRoute} />
             <div className="menu-item-separator"></div>
         </div>
     </div>

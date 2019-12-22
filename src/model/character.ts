@@ -8,6 +8,7 @@ export type Character = {
     cash: number;
     job: string;
     inventory: CharacterInventory;
+    cyberware: CharacterCyberware;
 };
 
 export type CharacterSkills = {
@@ -16,6 +17,18 @@ export type CharacterSkills = {
 
 export type CharacterInventory = {
     [id: string]: number;
+};
+
+export type CharacterCyberware = {
+    neural?: string[];
+    audio?: string[];
+    leftArm?: string[];
+    rightArm?: string[];
+    leftLeg?: string[];
+    rightLeg?: string[];
+    leftEye?: string[];
+    rightEye?: string[];
+    other: string[];
 };
 
 export type CharacterStatistics = {
