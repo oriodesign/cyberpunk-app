@@ -1,0 +1,32 @@
+.cyberware-item {
+    padding-bottom: 2px;
+    background: rgba(4, 8, 27, 0.4);
+}
+
+td.cyberware-item-name {
+    font-weight: bold;
+    text-align: left;
+    min-width: 300px;
+}
+
+.cyberware-item-buy {
+    color: cyan;
+    cursor: pointer;
+}
+
+.cyberware-item-buy.danger {
+    color: red;
+    opacity: 0.7;
+}
+
+.cyberware-item-buy.danger:hover {
+    color: red;
+}
+
+.cyberware-item-buy:hover {
+    color: yellow;
+}
+
+.cyberware-item-installed {
+    color: greenyellow;
+}

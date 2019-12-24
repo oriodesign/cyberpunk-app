@@ -47,7 +47,8 @@ export const DistributeStats: FC<Props> = ({ setRoute, character, setCharacter }
     function onConfirm() {
         setCharacter({
             ...character,
-            statistics: { ...statistics }
+            statistics: { ...statistics },
+            humanity: statistics.empathy * 10
         });
         setRoute("menu");
     }

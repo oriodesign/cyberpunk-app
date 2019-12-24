@@ -6,12 +6,7 @@ type Props = {
     onRolled: (value: number) => void;
 };
 
-const MAX_ITERATION = 100;
-const MAX_FLIP = 50;
-
-function ease(timeFraction: number) {
-    return 1 - Math.sin(Math.acos(timeFraction));
-}
+const MAX_ITERATION = 18;
 
 function getRandomInt(min: number, max: number) {
     return Math.round(Math.random() * (max - min) + min);
@@ -29,7 +24,7 @@ export const Dice: FC<Props> = ({ min, max, onRolled }) => {
             return;
         }
 
-        const t = ease(iteration.current / MAX_ITERATION) * MAX_FLIP;
+        const t = iteration.current * iteration.current;
 
         setTimeout(() => {
             valueRef.current = getRandomInt(min, max);

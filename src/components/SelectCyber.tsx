@@ -1,9 +1,11 @@
 import React, { FC, useState } from 'react';
 import './SelectCyber.css';
 import { Character } from '../model/character';
-import { Cyberware, CyberBodyPart, cyberBodyPartDetails, cyberwareInventory } from '../model/cyberware';
-import { BodyPart } from '../model/gear';
-
+import { Cyberware, CyberBodyPart, cyberBodyPartDetails, cyberwareInventory, cyberSurgeryDetail, BodyPartDetail } from '../model/cyberware';
+import { BuyBodyPartModal } from './BuyBodyPartModal';
+import { BuyCyberwareModal } from './BuyCyberwareModal';
+import { CyberwareItem } from './CyberwareItem';
+import { CyberBodyPart as Cb } from './CyberBodyPart';
 
 type Props = {
     character: Partial<Character>;
@@ -13,21 +15,57 @@ type Props = {
 
 export const SelectCyber: FC<Props> = ({ character, setCharacter, setRoute }) => {
     const [bodyPart, setBodyPart] = useState<CyberBodyPart>("other");
+    const [humanityRoll, setHumanityRoll] = useState();
+    const [buyingCyberware, setBuyingCyberware] = useState<Cyberware>();
+    const [buyingBodyPart, setBuyingBodyPart] = useState<BodyPartDetail>();
     const [focusedCyberware, setFocusedCyberware] = useState<Cyberware>();
     const cyberware = character.cyberware!!;
     const bodyPartDetail = cyberBodyPartDetails[bodyPart];
     const inventory = cyberwareInventory[bodyPart];
 
     function className(type: string): string {
-        return type === bodyPart ? "body-part-button selected" : "body-part-type-button"
+        return type === bodyPart ? "body-part-type-button selected" : "body-part-type-button"
     };
-
-    function buy(item: Cyberware, area: string) {
-
-    }
 
     function onConfirm() {
         setRoute("menu");
+    }
+
+    function onHumanityRoll(result: number) {
+        setHumanityRoll(result);
+        setCharacter({
+            ...character,
+            humanity: character.humanity!! - result,
+            cash: character.cash!! - buyingBodyPart!!.cost,
+            cyberware: {
+                ...cyberware,
+                [buyingBodyPart!!.id]: []
+            }
+        });
+    }
+
+    function onHumanityRollForCyberware(result: number) {
+        const bc = buyingCyberware!!;
+
+        setHumanityRoll(result);
+        setCharacter({
+            ...character,
+            humanity: character.humanity!! - result,
+            cash: character.cash!! - bc.cost,
+            cyberware: {
+                ...cyberware,
+                [bodyPart]: [
+                    ...cyberware[bodyPart]!!,
+                    bc.id
+                ]
+            }
+        });
+    }
+
+    function closeModal() {
+        setBuyingBodyPart(undefined);
+        setHumanityRoll(undefined);
+        setBuyingCyberware(undefined);
     }
 
     return <div className="select-cyberware page">
@@ -39,7 +77,9 @@ export const SelectCyber: FC<Props> = ({ character, setCharacter, setRoute }) =>
 
                 <div className="body-part-selector">
                     {Object.keys(cyberBodyPartDetails).map((key) =>
-                        <div className={className(key)} onClick={() => setBodyPart(key as any)}>{(cyberBodyPartDetails as any)[key].menuLabel}</div>
+                        <div
+                            className={className(key)}
+                            onClick={() => setBodyPart(key as any)}>{(cyberBodyPartDetails as any)[key].menuLabel}</div>
                     )}
 
                 </div>
@@ -47,46 +87,64 @@ export const SelectCyber: FC<Props> = ({ character, setCharacter, setRoute }) =>
             </div>
             <div className="center-col">
 
-                {!cyberware[bodyPart] && <div>
-                    <div>{bodyPartDetail.name}</div>
-                    <div>{bodyPartDetail.description}</div>
-                    <div>{bodyPartDetail.surgery}</div>
-                    <div>{bodyPartDetail.humanityLoss}</div>
-                    <div>Buy {bodyPartDetail.cost}$</div>
-                </div>}
+                {!cyberware[bodyPart] && <Cb
+                    character={character}
+                    bodyPartDetail={bodyPartDetail}
+                    setBuyingBodyPart={setBuyingBodyPart} />}
+
+                {!!cyberware[bodyPart] && bodyPart !== "other" && <div
+                    className="installed-body-part"><strong>{bodyPartDetail.name}</strong> installed</div>}
 
 
-                {!!cyberware[bodyPart] && <div>
-                    {inventory.map(i => <div key={i.title}>
+                <div className="cyberware-list">
+                    {inventory.map(i => <div className="cyberware-type-wrapper" key={i.title}>
                         <h1>{i.title}</h1>
-                        <table className="cyberware-list">
-                            {i.items.map(item => <div key={item.id}>
-                                <div>{item.name}</div>
-                                <div>{item.surgery}</div>
-                                <div>{item.humanityLoss}</div>
-                                <div>Buy {item.cost}</div>
-                            </div>)}
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>Surgery</th>
+                                <th>Hum. <br />Loss</th>
+                            </tr>
+                            {i.items.map(item => <CyberwareItem
+                                bodyPart={bodyPart}
+                                character={character}
+                                item={item}
+                                key={item.id}
+                                setFocusedCyberware={setFocusedCyberware}
+                                setBuyingCyberware={setBuyingCyberware} />)}
                         </table>
                     </div>
                     )}
 
-                </div>}
+                </div>
 
             </div>
 
             <div className="right-col">
-
+                <div className="cash-display">{character.cash!!}$</div>
+                <div className="humanity-display">{character.humanity!!} Humanity</div>
             </div>
         </div>
 
 
         {focusedCyberware && <div className="sidepanel">
             <h1>{focusedCyberware.name}</h1>
-
             <p>{focusedCyberware.description}</p>
-
             <button className="neon-button" onClick={() => setFocusedCyberware(undefined)}>Close</button>
         </div>}
+
+        {buyingBodyPart && <BuyBodyPartModal
+            bodyPart={bodyPartDetail}
+            closeModal={closeModal}
+            humanityRoll={humanityRoll}
+            onHumanityRoll={onHumanityRoll} />}
+
+        {buyingCyberware && <BuyCyberwareModal
+            cyberware={buyingCyberware}
+            closeModal={closeModal}
+            humanityRoll={humanityRoll}
+            onHumanityRollForCyberware={onHumanityRollForCyberware}
+        />}
 
         <div>
             <button className="neon-button danger" onClick={() => setRoute("menu")}>Cancel</button>

@@ -1,5 +1,12 @@
 export type CyberSurgery = "n" | "m" | "ma" | "cr";
 
+export const cyberSurgeryDetail = {
+    n: { title: "None" },
+    m: { title: "Minor" },
+    ma: { title: "Major" },
+    cr: { title: "Critical" },
+};
+
 export type CyberType = "fashionware" | "neuralware" | "implants" |
     "bioware" | "cyberweapon" | "cyberoptic" | "cyberaudio" |
     "cyberlimb" | "cyberhand" | "cyberfoot" | "cyberlimbBuiltIns" | "cyberlimbWeapon" | "linearFrame" | "bodyPlating";
@@ -17,83 +24,140 @@ export type Cyberware = {
 export type CyberBodyPart = "neural" | "leftEye" | "rightEye" |
     "audio" | "rightLeg" | "leftLeg" | "rightArm" | "leftArm" | "other";
 
-export const cyberBodyPartDetails = {
+export type BodyPartDetail = {
+    id: CyberBodyPart;
+    name: string;
+    menuLabel: string;
+    description: string;
+    type: CyberType | "";
+    surgery: CyberSurgery;
+    cost: number;
+    humanityLoss: string;
+};
+
+export const cyberBodyPartDetails: { [id: string]: BodyPartDetail } = {
     neural: {
+        id: "neural",
         name: "Neuralware Processor",
         menuLabel: "Neural",
-        description: "",
+        description: `
+        One of the most important aspects of cybertech is invisible to the naked eye. This type of enhancement, known as neuralware, is usually in the form of tiny co-processing chips and nerve amplifiers that increase existing abilities.
+The basic neural processor is a "switch-box" implanted into the lower spine, and is used to route signals from external cyberwear to the central nervous system. It is the main system for any type of neural interface, including reflex boosters, interface plugs, weapon, DataTerm and vehicle links, mini-computers and sensory augmentations. The Neural processor has a small inspection space which allows secondary co-processors to be inserted into the basic processor module. This makes upgrading a process of opening the inspection space in a sterile environment and inserting the new co-processors.
+Implanting a neural processor is far easier than one would expect, thanks to the science of nanotech. The basic module is surgically affixed to the spine, where it releases a flood of nanosurgical units into the spinal column. These microscopic machines thread tiny linkages through the central nervous system, hooking nerve endings to the neural processor. This process takes some time (1D6+7 days) before the nanosurgeons have worked their way through the entire body and all the connections are hooked up to the neural processor.
+        `,
         surgery: "m",
         cost: 1000,
-        humanityLoss: "1d6"
+        humanityLoss: "1d6",
+        type: "neuralware"
     },
     leftEye: {
+        id: "leftEye",
         name: "Left Eye Module",
         menuLabel: "Left Eye",
-        description: "",
+        description: `
+        A combination of digital processor and camera, cyberoptics are replacements for normal eyes. Cybervision is just like regular vision, only better. Colors are brighter, images sharper. And that's just the start.
+Want to see life as a 30's black and white movie? No problem. Telescopic or microscopic vision? Optional. Infrared and low light vision? Standard for Solos.
+Cyberoptics can look exactly like normal eyes, although a wide variety of fashion iris colors are available (amber, white, burgundy and violet are very popular). Some versions are transparent, with glitter or lights swirling inside of them. Other are superchromed for a more "cyber" look. Others can change eye color at will or to match clothes and surroundings. Some even have tiny designer logos around the iris. Cyberoptics with cameras or weapons usually load from the front, with the iris opening up when the front of the eye is depressed.
+        `,
         surgery: "ma",
         type: "cyberoptic",
         cost: 500,
         humanityLoss: "2d6"
     },
     rightEye: {
+        id: "rightEye",
         name: "Right Eye Module",
         menuLabel: "Right Eye",
-        description: "",
+        description: `
+        A combination of digital processor and camera, cyberoptics are replacements for normal eyes. Cybervision is just like regular vision, only better. Colors are brighter, images sharper. And that's just the start.
+Want to see life as a 30's black and white movie? No problem. Telescopic or microscopic vision? Optional. Infrared and low light vision? Standard for Solos.
+Cyberoptics can look exactly like normal eyes, although a wide variety of fashion iris colors are available (amber, white, burgundy and violet are very popular). Some versions are transparent, with glitter or lights swirling inside of them. Other are superchromed for a more "cyber" look. Others can change eye color at will or to match clothes and surroundings. Some even have tiny designer logos around the iris. Cyberoptics with cameras or weapons usually load from the front, with the iris opening up when the front of the eye is depressed. 
+        `,
         surgery: "ma",
         type: "cyberoptic",
         cost: 500,
         humanityLoss: "2d6"
     },
     audio: {
+        id: "audio",
         name: "Basic Hearing Module",
         menuLabel: "Audio",
-        description: "",
+        description: `
+        Cyberaudio systems patch into the auditory nerves and speech centers of the brain. This enhancement affects both ears, and also includes a subvocalizing mike on the mastoid bone. There is no visible change to the outer ear, although some cyberpunks replace the outer ear with a set of mechanical speaker pickups for max effect.
+        `,
         surgery: "n",
         type: "cyberaudio",
         cost: 200,
         humanityLoss: "2d6"
     },
     leftArm: {
+        id: "leftArm",
         name: "Left Arm Replacement",
         menuLabel: "Left Arm",
-        description: "",
+        description: `
+        The popular myth about cyberlimbs is that they enable their owners to perform all kinds of superheroic feats. To a point, it's true; cyberlimbs can be designed with boosted strength and speed, using synthetic muscle fibers and silicon chips. What you won't find are people running at 200 miles an hour, bending steel bars with their hands or throwing Volkswagens around. Why can't you go around lifting cars and punching down walls like the cyborgs in the comics? Simple physiology. The replacement limb must be able to work in concert with the remaining "meat" parts of the body. Even if your arm was ten times stronger than before, the back and shoulder muscles supporting that cyberlimb wouldn't be - and they'd shred long before the artificial muscles did. But within limits, a cyber-equipped person can do some pretty impressive party tricks:
+Crushing: A cybernetic arm uses synthetic muscle fibers instead of flesh and blood. They don't get tired, and they don't feel pain. They are also much stronger than normal muscle tissue. This gives a cyberarm tremendous gripping power. All cyberlimbs can easily crush light metals, woods and plastics. They can crush glass and plastic to dust (although they can't crush lumps of coal into diamonds!). In combat, any crushing grip with a cyberarm will do 2D6 damage.
+Pain: Cyberarms never grow tired, allowing the wearer to hang from high places indefinitely. You can turn off the touch sensors with the flick of a mental switch, eliminating pain and allowing you to perform feats such as reaching into raging fires, dabbling in tanks of liquid nitrogen, and picking up red-hot pokers. A gunshot wound to a cyberlimb has no pain effects; you don't have to make a saving roll against shock and stun.
+Damage: Cyberlimbs can take (and dish out) a tremendous amount of damage, so much so that they are treated like machinery for the purposes of game combat. All cyberlimbs can take up to 20 points of structural damage before they are useless, and up to 30 total points of structural damage before they are destroyed. A cyberarm punch does 1D6 damage to its target; wall, car, someone's head; no matter. A cyberleg kick will do 2D6 damage.
+        `,
         surgery: "cr",
         type: "cyberlimb",
         cost: 3000,
         humanityLoss: "2d6"
     },
     rightArm: {
+        id: "rightArm",
         name: "Right Arm Replacement",
         menuLabel: "Right Arm",
-        description: "",
+        description: `
+        The popular myth about cyberlimbs is that they enable their owners to perform all kinds of superheroic feats. To a point, it's true; cyberlimbs can be designed with boosted strength and speed, using synthetic muscle fibers and silicon chips. What you won't find are people running at 200 miles an hour, bending steel bars with their hands or throwing Volkswagens around. Why can't you go around lifting cars and punching down walls like the cyborgs in the comics? Simple physiology. The replacement limb must be able to work in concert with the remaining "meat" parts of the body. Even if your arm was ten times stronger than before, the back and shoulder muscles supporting that cyberlimb wouldn't be - and they'd shred long before the artificial muscles did. But within limits, a cyber-equipped person can do some pretty impressive party tricks:
+        Crushing: A cybernetic arm uses synthetic muscle fibers instead of flesh and blood. They don't get tired, and they don't feel pain. They are also much stronger than normal muscle tissue. This gives a cyberarm tremendous gripping power. All cyberlimbs can easily crush light metals, woods and plastics. They can crush glass and plastic to dust (although they can't crush lumps of coal into diamonds!). In combat, any crushing grip with a cyberarm will do 2D6 damage.
+        Pain: Cyberarms never grow tired, allowing the wearer to hang from high places indefinitely. You can turn off the touch sensors with the flick of a mental switch, eliminating pain and allowing you to perform feats such as reaching into raging fires, dabbling in tanks of liquid nitrogen, and picking up red-hot pokers. A gunshot wound to a cyberlimb has no pain effects; you don't have to make a saving roll against shock and stun.
+        Damage: Cyberlimbs can take (and dish out) a tremendous amount of damage, so much so that they are treated like machinery for the purposes of game combat. All cyberlimbs can take up to 20 points of structural damage before they are useless, and up to 30 total points of structural damage before they are destroyed. A cyberarm punch does 1D6 damage to its target; wall, car, someone's head; no matter. A cyberleg kick will do 2D6 damage.
+        `,
         surgery: "cr",
         type: "cyberlimb",
         cost: 3000,
         humanityLoss: "2d6"
     },
     leftLeg: {
+        id: "leftLeg",
         name: "Left Leg Replacement",
         menuLabel: "Left Leg",
-        description: "",
+        description: `
+        The popular myth about cyberlimbs is that they enable their owners to perform all kinds of superheroic feats. To a point, it's true; cyberlimbs can be designed with boosted strength and speed, using synthetic muscle fibers and silicon chips. What you won't find are people running at 200 miles an hour, bending steel bars with their hands or throwing Volkswagens around. Why can't you go around lifting cars and punching down walls like the cyborgs in the comics? Simple physiology. The replacement limb must be able to work in concert with the remaining "meat" parts of the body. Even if your arm was ten times stronger than before, the back and shoulder muscles supporting that cyberlimb wouldn't be - and they'd shred long before the artificial muscles did. But within limits, a cyber-equipped person can do some pretty impressive party tricks:
+        Damage: Cyberlimbs can take (and dish out) a tremendous amount of damage, so much so that they are treated like machinery for the purposes of game combat. All cyberlimbs can take up to 20 points of structural damage before they are useless, and up to 30 total points of structural damage before they are destroyed. A cyberarm punch does 1D6 damage to its target; wall, car, someone's head; no matter. A cyberleg kick will do 2D6 damage.
+        
+        Leaping: Cyberlegs employ powerful pistons and microservos, backed by bundles of synthetic muscles. With a pair of them, you can leap tremendous distances. Characters with paired cyberlegs can leap 6 meters straight up, or make a running jump of up to 8 meters.
+                
+        `,
         surgery: "cr",
         type: "cyberlimb",
         cost: 2000,
         humanityLoss: "2d6"
     },
     rightLeg: {
+        id: "rightLeg",
         name: "Right Leg Replacement",
         menuLabel: "Right Leg",
-        description: "",
+        description: `
+        The popular myth about cyberlimbs is that they enable their owners to perform all kinds of superheroic feats. To a point, it's true; cyberlimbs can be designed with boosted strength and speed, using synthetic muscle fibers and silicon chips. What you won't find are people running at 200 miles an hour, bending steel bars with their hands or throwing Volkswagens around. Why can't you go around lifting cars and punching down walls like the cyborgs in the comics? Simple physiology. The replacement limb must be able to work in concert with the remaining "meat" parts of the body. Even if your arm was ten times stronger than before, the back and shoulder muscles supporting that cyberlimb wouldn't be - and they'd shred long before the artificial muscles did. But within limits, a cyber-equipped person can do some pretty impressive party tricks:
+Damage: Cyberlimbs can take (and dish out) a tremendous amount of damage, so much so that they are treated like machinery for the purposes of game combat. All cyberlimbs can take up to 20 points of structural damage before they are useless, and up to 30 total points of structural damage before they are destroyed. A cyberarm punch does 1D6 damage to its target; wall, car, someone's head; no matter. A cyberleg kick will do 2D6 damage.
+
+Leaping: Cyberlegs employ powerful pistons and microservos, backed by bundles of synthetic muscles. With a pair of them, you can leap tremendous distances. Characters with paired cyberlegs can leap 6 meters straight up, or make a running jump of up to 8 meters.
+        
+        `,
         surgery: "cr",
         type: "cyberlimb",
         cost: 2000,
         humanityLoss: "2d6"
     },
     other: {
+        id: "other",
         name: "",
         menuLabel: "Other",
         description: "",
-        surgery: "",
+        surgery: "n",
         type: "",
         cost: 0,
         humanityLoss: ""
@@ -1437,16 +1501,12 @@ export const cyberwareInventory = {
             items: bioware
         },
         {
-            title: "Cyberweapon",
-            items: bioware
-        },
-        {
             title: "Linear Frames",
             items: linearFrames
         },
         {
             title: "Cyberweapon",
-            items: bioware
+            items: cyberweapons
         },
         {
             title: "Body Platings",

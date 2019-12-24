@@ -4,6 +4,7 @@ export type Character = {
     role: Roles;
     statsPoints: number;
     statistics: CharacterStatistics;
+    humanity: number;
     skills: CharacterSkills;
     cash: number;
     job: string;

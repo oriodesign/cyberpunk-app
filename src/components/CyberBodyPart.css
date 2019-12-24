@@ -1,0 +1,17 @@
+.cyber-body-part-name {
+    padding-bottom: 10px;
+    text-shadow: 0 0 5px white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cyber-body-part {
+    color: white;
+    font-size: 15px;
+    padding-bottom: 30px;
+}
+
+.cyber-body-part-description {
+    max-height: 150px;
+    overflow: scroll;
+}

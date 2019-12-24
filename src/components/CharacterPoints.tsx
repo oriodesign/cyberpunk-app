@@ -32,7 +32,7 @@ export const CharacterPoints: FC<Props> = ({ setRoute, character, setCharacter }
 
         <div className="separator" />
 
-        <DiceRoller min={1} max={10} count={9} onRolled={setTotal} />
+        <DiceRoller bonus={0} reroll={true} min={1} max={10} count={9} onRolled={setTotal} />
 
         <div className="separator" />
 

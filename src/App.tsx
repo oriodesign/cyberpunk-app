@@ -15,6 +15,7 @@ const App: React.FC = () => {
     role: "solo",
     statsPoints: 18,
     cash: 1000,
+    humanity: 100,
     cyberware: {
       other: []
     }
