@@ -1,6 +1,8 @@
 import { Roles } from "./role";
 
 export type Character = {
+    id: string;
+    name: string;
     role: Roles;
     statsPoints: number;
     statistics: CharacterStatistics;
@@ -16,9 +18,12 @@ export type CharacterSkills = {
     [id: string]: number;
 };
 
-export type CharacterInventory = {
-    [id: string]: number;
+export type CharacterItem = {
+    id: string;
+    itemId: string;
 };
+
+export type CharacterInventory = CharacterItem[]
 
 export type CharacterCyberware = {
     neural?: string[];

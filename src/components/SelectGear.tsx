@@ -1,7 +1,9 @@
 import React, { FC, useState } from 'react';
 import './SelectGear.css';
-import { Character, CharacterInventory } from '../model/character';
+import { Character, CharacterInventory, CharacterItem } from '../model/character';
 import { GearType, shopInventory, Weapon, Item, Armor, allItemsById } from '../model/gear';
+import uuid from 'uuid/v4';
+
 
 type Props = {
     character: Partial<Character>;
@@ -16,10 +18,14 @@ const reliabilityMap = {
     [""]: ""
 }
 
+type Cart = {
+    [id: string]: number;
+}
+
 export const SelectGear: FC<Props> = ({ character, setCharacter, setRoute }) => {
 
     const [gearType, setGearType] = useState<GearType>("pistol");
-    const [cart, setCart] = useState<CharacterInventory>(character.inventory || {});
+    const [cart, setCart] = useState<Cart>({});
     const [focusedItem, setFocusedItem] = useState<Item>();
 
     const items = shopInventory[gearType];
@@ -49,9 +55,21 @@ export const SelectGear: FC<Props> = ({ character, setCharacter, setRoute }) => 
     }, 0);
 
     function onConfirm() {
+        const baseInventory = character.inventory || [];
+        const newItems: CharacterItem[] = [];
+        Object.keys(cart).forEach(k => {
+            for (let i = 0; i < cart[k]; i++) {
+                newItems.push({ id: uuid(), itemId: k })
+            }
+        });
+
         setCharacter({
             ...character,
-            cash: character.cash!! - cartTotal
+            cash: character.cash!! - cartTotal,
+            inventory: [
+                ...baseInventory,
+                ...newItems
+            ]
         });
         setRoute("menu");
     }

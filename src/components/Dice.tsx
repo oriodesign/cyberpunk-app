@@ -6,7 +6,7 @@ type Props = {
     onRolled: (value: number) => void;
 };
 
-const MAX_ITERATION = 18;
+const MAX_ITERATION = 15;
 
 function getRandomInt(min: number, max: number) {
     return Math.round(Math.random() * (max - min) + min);
