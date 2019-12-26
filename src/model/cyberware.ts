@@ -1486,6 +1486,25 @@ const bodyPlatings: Cyberware[] = [
     },
 ];
 
+export const allCyberById = [
+    ...neuralware,
+    ...cyberoptic,
+    ...cyberaudio,
+    ...cyberhands,
+    ...cyberfeet,
+    ...cyberlimbOptions,
+    ...cyberlimbWeapons,
+    ...bodyPlatings,
+    ...cyberlimbBuildIns,
+    ...fashionware,
+    ...implants,
+    ...bioware
+].reduce((acc, curr) => {
+    acc[curr.id] = curr;
+    return acc;
+}, {} as any);
+
+
 export const cyberwareInventory = {
     other: [
         {
@@ -1594,3 +1613,42 @@ export const cyberwareInventory = {
         items: cyberlimbBuildIns
     }],
 };
+
+export const characterCyber = [
+    {
+        id: "neural",
+        title: "Neuralware"
+    },
+    {
+        id: "rightEye",
+        title: "Right Eye"
+    },
+    {
+        id: "leftEye",
+        title: "Left Eye"
+    },
+    {
+        id: "leftArm",
+        title: "Left Arm"
+    },
+    {
+        id: "rightArm",
+        title: "Right Arm"
+    },
+    {
+        id: "leftLeg",
+        title: "Left Leg"
+    },
+    {
+        id: "rightLeg",
+        title: "Right Leg"
+    },
+    {
+        id: "audio",
+        title: "Audio"
+    },
+    {
+        id: "other",
+        title: "Other"
+    },
+]

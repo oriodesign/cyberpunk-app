@@ -54,7 +54,11 @@ export const DistributeSkills: FC<Props> = ({ character, setCharacter, setRoute 
             ...character,
             skills: { ...skills },
             cash: startingCash,
-            job: startingJob
+            job: startingJob,
+            inventory: [],
+            cyberware: {
+                other: []
+            }
         });
         setRoute("menu");
     }

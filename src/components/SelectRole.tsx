@@ -18,7 +18,13 @@ export const SelectRole: FC<Props> = ({ character, setCharacter, setRoute }) => 
         setCharacter({
             ...character,
             skills: undefined,
-            role: role.id
+            role: role.id,
+            cash: 0,
+            job: undefined,
+            inventory: [],
+            cyberware: {
+                other: []
+            }
         });
         setRoute("menu");
         setFocusedRole(undefined);

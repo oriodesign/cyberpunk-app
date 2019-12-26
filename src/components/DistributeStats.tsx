@@ -48,7 +48,14 @@ export const DistributeStats: FC<Props> = ({ setRoute, character, setCharacter }
         setCharacter({
             ...character,
             statistics: { ...statistics },
-            humanity: statistics.empathy * 10
+            humanity: statistics.empathy * 10,
+            cash: 0,
+            skills: undefined,
+            job: undefined,
+            inventory: [],
+            cyberware: {
+                other: []
+            }
         });
         setRoute("menu");
     }

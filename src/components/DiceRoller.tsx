@@ -21,6 +21,7 @@ export const DiceRoller: FC<Props> = ({ count, min, max, onRolled, bonus, reroll
         if (min === max) {
             onRolled(min);
         }
+        // eslint-disable-next-line
     }, []);
 
     if (min === max) {

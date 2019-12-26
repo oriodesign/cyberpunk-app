@@ -782,3 +782,8 @@ export const skillStatMap = allSkillDetails.reduce((acc, curr) => {
     return acc;
 }, {} as any);
 
+export const skillDescriptionMap = allSkillDetails.reduce((acc, curr) => {
+    acc[curr.id] = curr.description;
+    return acc;
+}, {} as any);
+

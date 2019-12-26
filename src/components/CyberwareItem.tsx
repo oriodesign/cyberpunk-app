@@ -24,6 +24,6 @@ export const CyberwareItem: FC<Props> = ({ item, bodyPart, character, setBuyingC
         {!!cyberware[bodyPart] && !isInstalled && canAfford && <td onClick={() => setBuyingCyberware(item)} className="cyberware-item-buy">Buy {item.cost}</td>}
         {!!cyberware[bodyPart] && !isInstalled && !canAfford && <td className="cyberware-item-buy danger">Buy {item.cost}</td>}
         {isInstalled && <td className="cyberware-item-installed">Installed</td>}
-        {!cyberware[bodyPart] && <td className="cyberware-item-lock"><img src="/img/icons/lock.svg" /></td>}
+        {!cyberware[bodyPart] && <td className="cyberware-item-lock"><img alt="lock" src="/img/icons/lock.svg" /></td>}
     </tr>;
 };

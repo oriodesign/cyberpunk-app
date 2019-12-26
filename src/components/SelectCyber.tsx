@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import './SelectCyber.css';
 import { Character } from '../model/character';
-import { Cyberware, CyberBodyPart, cyberBodyPartDetails, cyberwareInventory, cyberSurgeryDetail, BodyPartDetail } from '../model/cyberware';
+import { Cyberware, CyberBodyPart, cyberBodyPartDetails, cyberwareInventory, BodyPartDetail } from '../model/cyberware';
 import { BuyBodyPartModal } from './BuyBodyPartModal';
 import { BuyCyberwareModal } from './BuyCyberwareModal';
 import { CyberwareItem } from './CyberwareItem';
@@ -26,10 +26,6 @@ export const SelectCyber: FC<Props> = ({ character, setCharacter, setRoute }) =>
     function className(type: string): string {
         return type === bodyPart ? "body-part-type-button selected" : "body-part-type-button"
     };
-
-    function onConfirm() {
-        setRoute("menu");
-    }
 
     function onHumanityRoll(result: number) {
         setHumanityRoll(result);

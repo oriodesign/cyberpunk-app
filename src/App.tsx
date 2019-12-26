@@ -30,7 +30,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      {route == "character-list" && <CharacterList setRoute={setRoute} characterList={characterList} setCharacterList={setCharacterList} setSelectedCharacter={setSelectedCharacter} />}
+      {route === "character-list" && <CharacterList setRoute={setRoute} characterList={characterList} setCharacterList={setCharacterList} setSelectedCharacter={setSelectedCharacter} />}
 
       {!!character && route === "menu" && <CharacterHome character={character} setRoute={setRoute} />}
       {!!character && route === "select-role" && <SelectRole setRoute={setRoute} character={character} setCharacter={setCharacter} />}

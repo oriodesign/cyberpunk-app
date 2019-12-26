@@ -1,8 +1,9 @@
 import React, { FC, useState } from 'react';
 import './SelectGear.css';
-import { Character, CharacterInventory, CharacterItem } from '../model/character';
+import { Character, CharacterItem } from '../model/character';
 import { GearType, shopInventory, Weapon, Item, Armor, allItemsById } from '../model/gear';
 import uuid from 'uuid/v4';
+import { getTotalGearWeight } from '../repository/characterRepository';
 
 
 type Props = {
@@ -15,6 +16,7 @@ const reliabilityMap = {
     vr: "★★★",
     st: "★★",
     ur: "★",
+    // eslint-disable-next-line
     [""]: ""
 }
 
@@ -32,6 +34,8 @@ export const SelectGear: FC<Props> = ({ character, setCharacter, setRoute }) => 
     function className(type: GearType): string {
         return type === gearType ? "gear-type-button selected" : "gear-type-button"
     };
+    const totalWeight = getTotalGearWeight(character);
+
 
     function buy(item: Item) {
         const currQuantity = cart[item.id] || 0;
@@ -182,6 +186,7 @@ export const SelectGear: FC<Props> = ({ character, setCharacter, setRoute }) => 
             <div className="right-col">
 
                 <div className="cash-display">{character.cash!! - cartTotal}$</div>
+                <div className="weight-display">Current Weight: {totalWeight}kg</div>
 
                 {Object.keys(cart).length > 0 && <div className="cart">
                     <h1>Cart</h1>

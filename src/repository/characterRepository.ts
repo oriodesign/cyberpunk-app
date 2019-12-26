@@ -1,5 +1,6 @@
-import { CharacterSkills } from "../model/character";
+import { CharacterSkills, Character } from "../model/character";
 import { specialSkillsDetails, SkillDetail } from "../model/skills";
+import { allItemsById, Weapon, Armor } from "../model/gear";
 
 export const roleCash: { [id: string]: number[] } = {
     rockerboy: [1000, 1500, 2000, 5000, 8000, 12000],
@@ -41,4 +42,99 @@ export function getStartingJobTitle(role: string, skills: CharacterSkills): stri
 
     const cashKey = specialSkillValue < 5 ? 0 : specialSkillValue - 5;
     return roleJobTitle[role][cashKey];
+}
+
+type CharacterWeapon = {
+    id: string;
+    weapon: Weapon;
+};
+
+type CharacterArmor = {
+    id: string;
+    armor: Armor;
+};
+
+export function getWeapons(character: Partial<Character>): CharacterWeapon[] {
+    const inventory = character.inventory;
+
+    if (!inventory) {
+        return [];
+    }
+
+    return inventory
+        .map(i => ({ weapon: allItemsById[i.itemId], id: i.id }))
+        .filter(i => !!(i.weapon as Weapon).damage) as CharacterWeapon[];
+}
+
+export function getArmors(character: Partial<Character>): CharacterArmor[] {
+    const inventory = character.inventory;
+    if (!inventory) {
+        return [];
+    }
+
+    return inventory
+        .map(i => ({ armor: allItemsById[i.itemId], id: i.id }))
+        .filter(i => !!(i.armor as Armor).stoppingPower) as CharacterArmor[];
+}
+
+const encumberanceMalus = [0, 0, 1, 3];
+
+export function getArmorEncumberance(character: Partial<Character>): number {
+    const armors = getArmors(character);
+    const malus = encumberanceMalus[armors.length];
+    return armors.reduce((acc, curr) => acc + curr.armor.encumbrance, malus);
+}
+
+const spDiffMap = [
+    5, 5, 5, 5, 5, 4, 4, 4, 4, 3,
+    3, 3, 3, 3, 3, 2, 2, 2, 2, 2,
+    2, 1, 1, 1, 1, 1, 1]
+
+function getStoppingPowerForPart(armors: CharacterArmor[], part: string): number {
+    const layers = armors.filter(a => a.armor.covers.includes(part))
+        .sort((a, b) => a.armor.stoppingPower > b.armor.stoppingPower ? -1 : 1);
+
+    if (layers.length === 0) {
+        return 0;
+    }
+
+    let stoppingPower = layers[0].armor.stoppingPower;
+
+    if (layers.length > 1) {
+        const secondLayerBonus = spDiffMap[layers[0].armor.stoppingPower - layers[1].armor.stoppingPower];
+        stoppingPower = stoppingPower + secondLayerBonus;
+    }
+    if (layers.length > 2) {
+        const thirdLayerBonus = spDiffMap[layers[1].armor.stoppingPower - layers[2].armor.stoppingPower];
+        stoppingPower = stoppingPower + thirdLayerBonus;
+    }
+
+    return stoppingPower;
+}
+
+export function getArmorStoppingPower(character: Partial<Character>) {
+    const armors = getArmors(character);
+    return {
+        head: getStoppingPowerForPart(armors, "head"),
+        torso: getStoppingPowerForPart(armors, "torso"),
+        leftArm: getStoppingPowerForPart(armors, "arms"),
+        rightArm: getStoppingPowerForPart(armors, "arms"),
+        leftLeg: getStoppingPowerForPart(armors, "legs"),
+        rightLeg: getStoppingPowerForPart(armors, "legs"),
+    }
+}
+
+export function getAllCharacterCyber(character: Partial<Character>) {
+    return Object.keys(character.cyberware!!).reduce((acc, curr) => {
+        return [...acc, ...(character.cyberware as any)[curr]];
+    }, [] as any)
+}
+
+export function getTotalGearWeight(character: Partial<Character>): number {
+    if (!character.inventory) {
+        return 0;
+    }
+
+    return character.inventory.reduce((acc, curr) => acc + (allItemsById[curr.itemId] as any).weight || 0, 0);
+
 }

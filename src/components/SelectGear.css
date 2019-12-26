@@ -63,6 +63,10 @@
     text-align: center;
 }
 
+.weight-display {
+    color: white;
+}
+
 td.buy-item-category {
     font-weight: bold;
     text-transform: uppercase;
