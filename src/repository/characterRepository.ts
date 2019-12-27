@@ -138,3 +138,22 @@ export function getTotalGearWeight(character: Partial<Character>): number {
     return character.inventory.reduce((acc, curr) => acc + (allItemsById[curr.itemId] as any).weight || 0, 0);
 
 }
+
+export function applyModifiers(character: Partial<Character>): Partial<Character> {
+
+    if (!character.statistics) {
+        return character;
+    }
+    const stats = character.statistics;
+    const armorEncumbrance = getArmorEncumberance(character);
+
+
+    return {
+        ...character,
+        statistics: {
+            ...stats,
+            reflexes: stats.reflexes - armorEncumbrance,
+            empathy: Math.ceil(character.humanity!! / 10)
+        }
+    };
+}

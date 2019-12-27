@@ -24,6 +24,7 @@ export const CharacterList: FC<Props> = ({ characterList, setCharacterList, setS
             {
                 id: uuid(),
                 name: name.trim(),
+                damage: 0,
                 cyberware: {
                     other: []
                 }

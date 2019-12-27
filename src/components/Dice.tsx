@@ -1,4 +1,5 @@
 import React, { FC, useState, useRef, useEffect } from "react";
+import { getRandomInt } from "../model/dice";
 
 type Props = {
     min: number;
@@ -7,10 +8,6 @@ type Props = {
 };
 
 const MAX_ITERATION = 15;
-
-function getRandomInt(min: number, max: number) {
-    return Math.round(Math.random() * (max - min) + min);
-}
 
 export const Dice: FC<Props> = ({ min, max, onRolled }) => {
 

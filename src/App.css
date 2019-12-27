@@ -56,6 +56,68 @@ p {
   box-shadow: 0 0 5px rgb(161, 247, 251);
 }
 
+.toggle-wrapper {
+  display: flex;
+  align-items: flex-start;
+}
+
+.toggle-wrapper p {
+  margin-top: 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.toggle-wrapper .toggle {
+  margin-right: 20px;
+}
+
+.toggle {
+  border: 1px solid white;
+  padding: 5px;
+  color: white;
+  opacity: 0.4;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.toggle.active {
+  opacity: 1;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.form-field {
+  padding-bottom: 10px;
+}
+
+.form-field-toggles {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-field-toggles .toggle {
+  margin: 0 3px 3px 0;
+}
+
+.form-field label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  display: block;
+  padding-bottom: 5px;
+}
+
+.form-field input {
+  font-size: 16px;
+  padding: 5px;
+}
+
+.form-field select {
+  font-size: 16px;
+  display: block;
+  padding: 5px;
+  height: 30px;
+  width: 100%;
+}
+
 @media only screen and (max-width: 600px) {
   h1 {
     font-size: 20px;

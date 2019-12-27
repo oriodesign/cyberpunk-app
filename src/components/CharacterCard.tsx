@@ -4,13 +4,18 @@ import { Character, deriveStats } from '../model/character';
 import { rolesTitlesMap } from '../model/role';
 import { statAbbr } from '../model/statistics';
 import { StatValue } from './StatValue';
+import { DamageBar } from './DamageBar';
+import { InitiativeModal } from './InitiativeModal';
 import { skillTitlesMap, skillStatMap, skillDescriptionMap } from '../model/skills';
-import { allItemsById } from '../model/gear';
-import { getWeapons, getArmorEncumberance, getArmorStoppingPower, getAllCharacterCyber, getTotalGearWeight } from '../repository/characterRepository';
+import { allItemsById, Weapon } from '../model/gear';
+import { getWeapons, getArmorEncumberance, getArmorStoppingPower, getAllCharacterCyber, getTotalGearWeight, applyModifiers } from '../repository/characterRepository';
 import { allCyberById, characterCyber } from '../model/cyberware';
+import { DamageModal } from './DamageModal';
+import { AttackModal } from './AttackModal';
 
 type Props = {
     character: Partial<Character>;
+    setCharacter: (character: Partial<Character>) => void;
 }
 
 type FocusedItem = {
@@ -18,9 +23,12 @@ type FocusedItem = {
     description: string;
 };
 
-export const CharacterCard: FC<Props> = ({ character }) => {
+export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacter }) => {
 
+    const [openModal, setOpenModal] = useState<string>();
     const [focusedItem, setFocusedItem] = useState<FocusedItem>();
+    const [focusedWeapon, setFocusedWeapon] = useState<Weapon>();
+    const character = applyModifiers(baseCharacter);
 
     const derivedStats = character.statistics ? deriveStats(character.statistics) : undefined;
     const stoppingPower = getArmorStoppingPower(character);
@@ -58,9 +66,16 @@ export const CharacterCard: FC<Props> = ({ character }) => {
             <div className="right-col">
 
                 <div className="derived-stat-row">
+                    <div onClick={() => setOpenModal("initiative")} className="derived-stat-main">
+                        <div className="derived-stat-main-label">Initiative</div>
+                        <div className="derived-stat-main-value">{derivedStats.initiative}</div>
+                    </div>
+                </div>
+
+                <div className="derived-stat-row">
                     <div className="derived-stat-main">
                         <div className="derived-stat-main-label">Hum</div>
-                        <div className="derived-stat-main-value">{derivedStats.humanity}</div>
+                        <div className="derived-stat-main-value">{character.humanity}</div>
                     </div>
                     <div className="derived-stat-main">
                         <div className="derived-stat-main-label">Btm</div>
@@ -116,8 +131,17 @@ export const CharacterCard: FC<Props> = ({ character }) => {
                 </div>
 
 
+
+
+                <div className="separator" />
+
             </div>
         </div>}
+
+        <div onClick={() => setOpenModal("damage")}>
+            <DamageBar damage={character.damage || 0} />
+        </div>
+
 
         {
             character.skills && <div className="character-skills-wrapper">
@@ -126,7 +150,7 @@ export const CharacterCard: FC<Props> = ({ character }) => {
                         onClick={() => setFocusedItem({ name: skillTitlesMap[k], description: skillDescriptionMap[k] })}
                         className="character-skill">
                         <div className="character-skill-name">{skillTitlesMap[k]}</div>
-                        <div className="character-skill-value">+{character.skills!![k] + (character.statistics as any)[skillStatMap[k]]}</div>
+                        <div className="character-skill-value">+{character.skills!![k] + ((character.statistics as any)[skillStatMap[k]] || 0)}</div>
                     </div>)}
             </div>
         }
@@ -150,7 +174,10 @@ export const CharacterCard: FC<Props> = ({ character }) => {
 
 
 
-                {(getWeapons(character)).map(i => <tr key={i.id} className="character-weapon">
+                {(getWeapons(character)).map(i => <tr
+                    key={i.id}
+                    onClick={() => { setFocusedWeapon(i.weapon); setOpenModal("attack"); }}
+                    className="character-weapon">
                     <td className="character-weapon-name">{i.weapon.name}</td>
                     <td className="character-weapon-type">{i.weapon.type}</td>
                     <td className="character-weapon-accuracy">{i.weapon.accuracy}</td>
@@ -159,8 +186,6 @@ export const CharacterCard: FC<Props> = ({ character }) => {
                     <td className="character-weapon-shots">{i.weapon.shots}</td>
                     <td className="character-weapon-rof">{i.weapon.rateOfFire}</td>
                     <td className="character-weapon-range">{i.weapon.range}</td>
-
-
 
                     <td className="character-weapon-reliability">{i.weapon.reliability}</td>
                 </tr>)}
@@ -205,5 +230,9 @@ export const CharacterCard: FC<Props> = ({ character }) => {
             <button className="neon-button" onClick={() => setFocusedItem(undefined)}>Close</button>
         </div>}
 
+        {openModal === "initiative" && <InitiativeModal character={character} closeModal={() => setOpenModal("")} />}
+        {openModal === "damage" && <DamageModal character={character} setCharacter={setCharacter} closeModal={() => setOpenModal("")} />}
+
+        {openModal === "attack" && <AttackModal setCharacter={setCharacter} character={character} weapon={focusedWeapon!!} closeModal={() => setOpenModal("")} />}
     </div>;
 };

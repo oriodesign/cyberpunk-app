@@ -1,0 +1,53 @@
+.damage-bar-row {
+    display: flex;
+}
+
+.damage-bar {
+    margin-bottom: 20px;
+}
+
+.damage-bar-level {
+    color: white;
+    font-size: 10px;
+    flex-grow: 1;
+}
+
+.damage-bar-level.active .damage-bar-label {
+    color: rgb(255, 184, 198);
+    opacity: 1;
+    text-shadow: 0 0 4px rgb(255, 184, 198);
+}
+
+.damage-bar-label {
+    margin-bottom: 3px;
+    opacity: 0.8;
+}
+
+.damage-bar-level.active .damage-stun-modifier {
+    color: rgb(255, 184, 198);
+    opacity: 1;
+}
+
+.damage-stun-modifier {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 3px;
+}
+
+.damage-points {
+    display: flex;
+    margin-bottom: 3px;
+}
+
+.damage-point {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 8px;
+    margin-right: 2px;
+    height: 8px;
+}
+
+.damage-point.active {
+    box-shadow: 0 0 5px rgba(211, 69, 98, 1);
+    background: rgb(253, 64, 101);
+    border: 1px solid rgba(211, 69, 98, 1);
+}

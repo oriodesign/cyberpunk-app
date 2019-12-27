@@ -6,6 +6,7 @@ export type Character = {
     role: Roles;
     statsPoints: number;
     statistics: CharacterStatistics;
+    damage: number;
     humanity: number;
     skills: CharacterSkills;
     cash: number;
@@ -57,6 +58,7 @@ export type DerivedStats = {
     lift: number;
     saveNumber: number;
     bodyTypeModifier: number;
+    initiative: number;
 };
 
 export const deriveStats = (s: CharacterStatistics): DerivedStats => {
@@ -69,6 +71,7 @@ export const deriveStats = (s: CharacterStatistics): DerivedStats => {
         saveNumber: s.bodyType,
         bodyTypeModifier: btm[s.bodyType],
         carry: s.bodyType * 10,
-        lift: s.bodyType * 40
+        lift: s.bodyType * 40,
+        initiative: s.reflexes
     };
 }

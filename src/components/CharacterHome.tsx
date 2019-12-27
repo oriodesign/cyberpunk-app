@@ -6,14 +6,15 @@ import { Menu } from './Menu';
 
 type Props = {
     character: Partial<Character>;
+    setCharacter: (c: Partial<Character>) => void;
     setRoute: (route: string) => void;
 }
 
-export const CharacterHome: FC<Props> = ({ character, setRoute }) => {
+export const CharacterHome: FC<Props> = ({ character, setRoute, setCharacter }) => {
     return <div className="character-home">
         <div className="row">
             <div className="left-col">
-                <CharacterCard character={character} />
+                <CharacterCard setCharacter={setCharacter} character={character} />
             </div>
             <div className="right-col">
                 <Menu character={character} setRoute={setRoute} />
