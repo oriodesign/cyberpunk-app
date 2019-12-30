@@ -51,3 +51,12 @@
     background: rgb(253, 64, 101);
     border: 1px solid rgba(211, 69, 98, 1);
 }
+
+@media only screen and (max-width: 600px) {
+    .damage-bar-row {
+        flex-wrap: wrap;
+    }
+    .damage-bar-level {
+        margin-bottom: 20px;
+    }
+}

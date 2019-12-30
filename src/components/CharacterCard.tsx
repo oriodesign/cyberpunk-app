@@ -53,7 +53,7 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
                         if (id === "reflexes") {
                             value = value - getArmorEncumberance(character);
                         }
-                        return <div className="stat-value-line">
+                        return <div key={id} className="stat-value-line">
                             <span className="stat-value-line-title">{(statAbbr as any)[id]}</span> <StatValue value={value} />
                         </div>
                     })}
@@ -138,15 +138,16 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
             </div>
         </div>}
 
-        <div onClick={() => setOpenModal("damage")}>
+        {character.skills && <div onClick={() => setOpenModal("damage")}>
             <DamageBar damage={character.damage || 0} />
-        </div>
+        </div>}
 
 
         {
             character.skills && <div className="character-skills-wrapper">
                 {Object.keys(character.skills).map(k =>
                     <div
+                        key={k}
                         onClick={() => setFocusedItem({ name: skillTitlesMap[k], description: skillDescriptionMap[k] })}
                         className="character-skill">
                         <div className="character-skill-name">{skillTitlesMap[k]}</div>
@@ -157,39 +158,42 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
 
         {character.inventory && getWeapons(character).length > 0 && <h3>Weapons</h3>}
         {
-            character.inventory && getWeapons(character).length > 0 && <table className="character-weapons-wrapper">
+            character.inventory && getWeapons(character).length > 0 && <div className="table-wrapper"><table className="character-weapons-wrapper">
 
-                <tr>
-                    <th></th>
-                    <th>Type</th>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Type</th>
 
-                    <th>Acc.</th>
-                    <th>Dmg</th>
-                    <th>Ammo</th>
-                    <th>Shots</th>
-                    <th>Rof</th>
-                    <th>Range</th>
-                    <th>Rel.</th>
-                </tr>
+                        <th>Acc.</th>
+                        <th>Dmg</th>
+                        <th>Ammo</th>
+                        <th>Shots</th>
+                        <th>Rof</th>
+                        <th>Range</th>
+                        <th>Rel.</th>
+                    </tr>
+                </thead>
 
+                <tbody>
+                    {(getWeapons(character)).map(i => <tr
+                        key={i.id}
+                        onClick={() => { setFocusedWeapon(i.weapon); setOpenModal("attack"); }}
+                        className="character-weapon">
+                        <td className="character-weapon-name">{i.weapon.name}</td>
+                        <td className="character-weapon-type">{i.weapon.type}</td>
+                        <td className="character-weapon-accuracy">{i.weapon.accuracy}</td>
+                        <td className="character-weapon-damage">{i.weapon.damage}</td>
+                        <td className="character-weapon-ammo">{i.weapon.ammo}</td>
+                        <td className="character-weapon-shots">{i.weapon.shots}</td>
+                        <td className="character-weapon-rof">{i.weapon.rateOfFire}</td>
+                        <td className="character-weapon-range">{i.weapon.range}</td>
 
+                        <td className="character-weapon-reliability">{i.weapon.reliability}</td>
+                    </tr>)}
+                </tbody>
 
-                {(getWeapons(character)).map(i => <tr
-                    key={i.id}
-                    onClick={() => { setFocusedWeapon(i.weapon); setOpenModal("attack"); }}
-                    className="character-weapon">
-                    <td className="character-weapon-name">{i.weapon.name}</td>
-                    <td className="character-weapon-type">{i.weapon.type}</td>
-                    <td className="character-weapon-accuracy">{i.weapon.accuracy}</td>
-                    <td className="character-weapon-damage">{i.weapon.damage}</td>
-                    <td className="character-weapon-ammo">{i.weapon.ammo}</td>
-                    <td className="character-weapon-shots">{i.weapon.shots}</td>
-                    <td className="character-weapon-rof">{i.weapon.rateOfFire}</td>
-                    <td className="character-weapon-range">{i.weapon.range}</td>
-
-                    <td className="character-weapon-reliability">{i.weapon.reliability}</td>
-                </tr>)}
-            </table>
+            </table></div>
         }
 
         {character.inventory && character.inventory.length > 0 && <h3>Inventory ({totalWeight}Kg)</h3>}
@@ -212,10 +216,11 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
                 return null;
             }
 
-            return <div className="character-cyberware-wrapper">
+            return <div key={cc.id} className="character-cyberware-wrapper">
                 {cc.id === "other" && cyber[cc.id].length > 0 && <label>{cc.title}</label>}
                 {cc.id !== "other" && <label className="cyber-installed">{cc.title} Installed</label>}
                 {cyber[cc.id].map((c: string) => <div
+                    key={c}
                     onClick={() => setFocusedItem({ name: allCyberById[c].name, description: allCyberById[c].description })}
                     className="character-cyberware">
                     {allCyberById[c].name}

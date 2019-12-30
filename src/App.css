@@ -19,6 +19,11 @@ p {
   line-height: 21px;
 }
 
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .page-title {
   padding-bottom: 20px;
 }
@@ -116,6 +121,11 @@ p {
   padding: 5px;
   height: 30px;
   width: 100%;
+}
+
+body.modal-open {
+  height: 100vh;
+  overflow-y: hidden;
 }
 
 @media only screen and (max-width: 600px) {

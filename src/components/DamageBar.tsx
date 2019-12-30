@@ -15,12 +15,14 @@ export const DamageBar: FC<Props> = ({ damage }) => {
     return <div className="damage-bar">
 
         <div className="damage-bar-row">
-            {damageLevels.map((d, i) => <div className={damage > (i * 4) ? "damage-bar-level active" : "damage-bar-level"}>
+            {damageLevels.map((d, i) => <div
+                key={d}
+                className={damage > (i * 4) ? "damage-bar-level active" : "damage-bar-level"}>
                 <div className="damage-bar-label">
                     {d}
                 </div>
                 <div className="damage-points">
-                    {[0, 1, 2, 3].map(p => <div className={damage > (i * 4) + p ? "damage-point active" : "damage-point"}></div>)}
+                    {[0, 1, 2, 3].map(p => <div key={p} className={damage > (i * 4) + p ? "damage-point active" : "damage-point"}></div>)}
                 </div>
                 <div className="damage-stun-modifier">
                     Stun=-{i}

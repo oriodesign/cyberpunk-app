@@ -279,12 +279,14 @@ export const AttackModal: FC<Props> = ({ closeModal, weapon, character, setChara
         <div className="form-field">
             <label>Damage roll</label>
             <DiceRoller
-                onRolled={setResult}
+                onRolled={setDamage}
                 count={diceMap[weapon.damage].count}
                 reroll={true}
                 min={diceMap[weapon.damage].min}
                 max={diceMap[weapon.damage].max}
                 bonus={0} />
+
+            {damage && <p>Result: {damage}</p>}
         </div>
 
         <div className="separator" />

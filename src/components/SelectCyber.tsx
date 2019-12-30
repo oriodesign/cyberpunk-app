@@ -74,6 +74,7 @@ export const SelectCyber: FC<Props> = ({ character, setCharacter, setRoute }) =>
                 <div className="body-part-selector">
                     {Object.keys(cyberBodyPartDetails).map((key) =>
                         <div
+                            key={key}
                             className={className(key)}
                             onClick={() => setBodyPart(key as any)}>{(cyberBodyPartDetails as any)[key].menuLabel}</div>
                     )}
@@ -95,20 +96,26 @@ export const SelectCyber: FC<Props> = ({ character, setCharacter, setRoute }) =>
                 <div className="cyberware-list">
                     {inventory.map(i => <div className="cyberware-type-wrapper" key={i.title}>
                         <h1>{i.title}</h1>
-                        <table>
-                            <tr>
-                                <th></th>
-                                <th>Surgery</th>
-                                <th>Hum. <br />Loss</th>
-                            </tr>
-                            {i.items.map(item => <CyberwareItem
-                                bodyPart={bodyPart}
-                                character={character}
-                                item={item}
-                                key={item.id}
-                                setFocusedCyberware={setFocusedCyberware}
-                                setBuyingCyberware={setBuyingCyberware} />)}
-                        </table>
+                        <div className="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Surgery</th>
+                                        <th>Hum. <br />Loss</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {i.items.map(item => <CyberwareItem
+                                        bodyPart={bodyPart}
+                                        character={character}
+                                        item={item}
+                                        key={item.id}
+                                        setFocusedCyberware={setFocusedCyberware}
+                                        setBuyingCyberware={setBuyingCyberware} />)}
+                                </tbody>
+
+                            </table></div>
                     </div>
                     )}
 

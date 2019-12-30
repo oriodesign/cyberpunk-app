@@ -30,3 +30,9 @@ td.cyberware-item-name {
 .cyberware-item-installed {
     color: greenyellow;
 }
+
+@media only screen and (max-width: 600px) {
+    .cyberware-item {
+        font-size: 11px;
+    }
+}

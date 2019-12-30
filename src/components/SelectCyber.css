@@ -2,6 +2,10 @@
     color: white;
 }
 
+.body-part-selector {
+    margin-bottom: 20px;
+}
+
 .cyberware-list h1 {
     font-size: 15px;
     padding-bottom: 10px;
@@ -13,6 +17,8 @@
     border-spacing: 0 2px;
     font-size: 14px;
     margin-bottom: 20px;
+    width: 100%;
+    table-layout: fixed;
 }
 
 .cyberware-list td {
@@ -38,6 +44,7 @@
     height: 18px;
     width: 18px;
     opacity: 0.5;
+    display: block;
 }
 
 .installed-body-part {

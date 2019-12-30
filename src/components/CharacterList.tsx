@@ -46,6 +46,7 @@ export const CharacterList: FC<Props> = ({ characterList, setCharacterList, setS
 
         <div className="character-list">
             {characterList.map(c => <div
+                key={c.id}
                 onClick={() => selectCharacter(c)}
                 className="character-list-item">{c.name}</div>)}
         </div>

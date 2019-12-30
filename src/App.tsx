@@ -25,6 +25,10 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [route])
+
+  useEffect(() => {
     localStorage.setItem("character-list", JSON.stringify(characterList));
   }, [characterList]);
 

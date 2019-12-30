@@ -10,7 +10,7 @@ export const StatValue: FC<Props> = ({ value }) => {
 
 
     return <div className="stat-value">
-        {blocks.map(filled => <div className={filled ? "stat-value-block filled" : "stat-value-block empty"} />)}
+        {blocks.map((filled, i) => <div key={i} className={filled ? "stat-value-block filled" : "stat-value-block empty"} />)}
         <span className="stat-value-number">{value}</span>
     </div>
 };

@@ -120,67 +120,75 @@ export const SelectGear: FC<Props> = ({ character, setCharacter, setRoute }) => 
 
             </div>
             <div className="center-col">
+                <div className="table-wrapper">
+                    <table className="buy-item-list">
 
-                <table className="buy-item-list">
+                        <thead>
 
-                    {!!(items[0] as Weapon).damage && <tr>
-                        <th></th>
-                        <th></th>
+                            {!!(items[0] as Weapon).damage && <tr>
+                                <th></th>
+                                <th></th>
 
-                        <th>Accuracy</th>
-                        <th>Damage</th>
-                        <th>Ammo</th>
-                        <th>Shots</th>
-                        <th>Rate of Fire</th>
-                        <th>Range</th>
-                        <th>Reliability</th>
-                    </tr>}
+                                <th>Accuracy</th>
+                                <th>Damage</th>
+                                <th>Ammo</th>
+                                <th>Shots</th>
+                                <th>Rate of Fire</th>
+                                <th>Range</th>
+                                <th>Reliability</th>
+                            </tr>}
 
-                    {!!(items[0] as Armor).covers && <tr>
-                        <th></th>
+                            {!!(items[0] as Armor).covers && <tr>
+                                <th></th>
 
-                        <th>Stopping power</th>
-                        <th>Encumbrance</th>
-                        <th>Covers</th>
-                    </tr>}
+                                <th>Stopping power</th>
+                                <th>Encumbrance</th>
+                                <th>Covers</th>
+                            </tr>}
 
-                    {items.map((i, index) => {
+                        </thead>
 
-                        if ((i as Weapon).damage) {
-                            const category = index === 0 || ((items[index - 1] as Weapon).category !== (i as Weapon).category) ? (i as Weapon).category : "";
+                        <tbody>
 
-                            return <tr className="buy-item buy-weapon" key={i.id}>
-                                <td className="buy-item-category">{category}</td>
-                                <td onClick={() => setFocusedItem(i)} className="buy-item-name">{i.name}</td>
-                                <td className="buy-item-accuracy">{(i as Weapon).accuracy}</td>
-                                <td className="buy-item-damage">{(i as Weapon).damage}</td>
-                                <td className="buy-item-ammo">{(i as Weapon).ammo}</td>
+                            {items.map((i, index) => {
 
-                                <td className="buy-item-shots">{(i as Weapon).shots}</td>
-                                <td className="buy-item-rof">{(i as Weapon).rateOfFire}</td>
-                                <td className="buy-item-range">{(i as Weapon).range}</td>
-                                <td className="buy-item-reliability">{reliabilityMap[(i as Weapon).reliability]}</td>
+                                if ((i as Weapon).damage) {
+                                    const category = index === 0 || ((items[index - 1] as Weapon).category !== (i as Weapon).category) ? (i as Weapon).category : "";
 
-                                <td className="buy-item-button" onClick={() => buy(i)}>Buy {i.cost}$</td>
-                            </tr>
-                        }
+                                    return <tr className="buy-item buy-weapon" key={i.id}>
+                                        <td className="buy-item-category">{category}</td>
+                                        <td onClick={() => setFocusedItem(i)} className="buy-item-name">{i.name}</td>
+                                        <td className="buy-item-accuracy">{(i as Weapon).accuracy}</td>
+                                        <td className="buy-item-damage">{(i as Weapon).damage}</td>
+                                        <td className="buy-item-ammo">{(i as Weapon).ammo}</td>
 
-                        if ((i as Armor).covers) {
-                            return <tr className="buy-item" key={i.id}>
-                                <td onClick={() => setFocusedItem(i)} className="buy-item-name">{i.name}</td>
-                                <td className="buy-item-stopping-power">{(i as Armor).stoppingPower}</td>
-                                <td className="buy-item-encumbrance">{(i as Armor).encumbrance}</td>
-                                <td className="buy-item-covers">{(i as Armor).covers.join(", ")}</td>
-                                <td className="buy-item-button" onClick={() => buy(i)}>Buy {i.cost}$</td>
-                            </tr>
-                        }
+                                        <td className="buy-item-shots">{(i as Weapon).shots}</td>
+                                        <td className="buy-item-rof">{(i as Weapon).rateOfFire}</td>
+                                        <td className="buy-item-range">{(i as Weapon).range}</td>
+                                        <td className="buy-item-reliability">{reliabilityMap[(i as Weapon).reliability]}</td>
 
-                        return <tr className="buy-item" key={i.id}>
-                            <td onClick={() => setFocusedItem(i)} className="buy-item-name">{i.name}</td>
-                            <td className="buy-item-button" onClick={() => buy(i)}>Buy {i.cost}$</td>
-                        </tr>
-                    })}
-                </table>
+                                        <td className="buy-item-button" onClick={() => buy(i)}>Buy {i.cost}$</td>
+                                    </tr>
+                                }
+
+                                if ((i as Armor).covers) {
+                                    return <tr className="buy-item" key={i.id}>
+                                        <td onClick={() => setFocusedItem(i)} className="buy-item-name">{i.name}</td>
+                                        <td className="buy-item-stopping-power">{(i as Armor).stoppingPower}</td>
+                                        <td className="buy-item-encumbrance">{(i as Armor).encumbrance}</td>
+                                        <td className="buy-item-covers">{(i as Armor).covers.join(", ")}</td>
+                                        <td className="buy-item-button" onClick={() => buy(i)}>Buy {i.cost}$</td>
+                                    </tr>
+                                }
+
+                                return <tr className="buy-item" key={i.id}>
+                                    <td onClick={() => setFocusedItem(i)} className="buy-item-name">{i.name}</td>
+                                    <td className="buy-item-button" onClick={() => buy(i)}>Buy {i.cost}$</td>
+                                </tr>
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div className="right-col">
