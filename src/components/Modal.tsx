@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
 
 import './Modal.css';
+import { createPortal } from 'react-dom';
 type Props = {
 }
 
@@ -18,7 +19,7 @@ export const Modal: FC<Props> = ({ children }) => {
         };
     });
 
-    return <div className="modal">
+    return createPortal(<div className="modal">
         <div className="modal-inner">{children}</div>
-    </div>
+    </div>, document.getElementById("modal")!!)
 };

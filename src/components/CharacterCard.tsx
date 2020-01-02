@@ -12,6 +12,7 @@ import { getWeapons, getArmorEncumberance, getArmorStoppingPower, getAllCharacte
 import { allCyberById, characterCyber } from '../model/cyberware';
 import { DamageModal } from './DamageModal';
 import { AttackModal } from './AttackModal';
+import { StatModal } from './StatModal';
 
 type Props = {
     character: Partial<Character>;
@@ -28,6 +29,7 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
     const [openModal, setOpenModal] = useState<string>();
     const [focusedItem, setFocusedItem] = useState<FocusedItem>();
     const [focusedWeapon, setFocusedWeapon] = useState<Weapon>();
+    const [focusedStat, setFocusedStat] = useState<string>("");
     const character = applyModifiers(baseCharacter);
 
     const derivedStats = character.statistics ? deriveStats(character.statistics) : undefined;
@@ -53,7 +55,9 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
                         if (id === "reflexes") {
                             value = value - getArmorEncumberance(character);
                         }
-                        return <div key={id} className="stat-value-line">
+                        return <div onClick={() => {
+                            setOpenModal("stat"); setFocusedStat(id);
+                        }} key={id} className="stat-value-line" >
                             <span className="stat-value-line-title">{(statAbbr as any)[id]}</span> <StatValue value={value} />
                         </div>
                     })}
@@ -136,11 +140,14 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
                 <div className="separator" />
 
             </div>
-        </div>}
+        </div>
+        }
 
-        {character.skills && <div onClick={() => setOpenModal("damage")}>
-            <DamageBar damage={character.damage || 0} />
-        </div>}
+        {
+            character.skills && <div onClick={() => setOpenModal("damage")}>
+                <DamageBar damage={character.damage || 0} />
+            </div>
+        }
 
 
         {
@@ -209,35 +216,41 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
         }
 
         {getAllCharacterCyber(character).length > 0 && <h3>Cyberware</h3>}
-        {characterCyber.map(cc => {
-            const cyber = character.cyberware!! as any;
+        {
+            characterCyber.map(cc => {
+                const cyber = character.cyberware!! as any;
 
-            if (!cyber[cc.id]) {
-                return null;
-            }
+                if (!cyber[cc.id]) {
+                    return null;
+                }
 
-            return <div key={cc.id} className="character-cyberware-wrapper">
-                {cc.id === "other" && cyber[cc.id].length > 0 && <label>{cc.title}</label>}
-                {cc.id !== "other" && <label className="cyber-installed">{cc.title} Installed</label>}
-                {cyber[cc.id].map((c: string) => <div
-                    key={c}
-                    onClick={() => setFocusedItem({ name: allCyberById[c].name, description: allCyberById[c].description })}
-                    className="character-cyberware">
-                    {allCyberById[c].name}
-                </div>)}
+                return <div key={cc.id} className="character-cyberware-wrapper">
+                    {cc.id === "other" && cyber[cc.id].length > 0 && <label>{cc.title}</label>}
+                    {cc.id !== "other" && <label className="cyber-installed">{cc.title} Installed</label>}
+                    {cyber[cc.id].map((c: string) => <div
+                        key={c}
+                        onClick={() => setFocusedItem({ name: allCyberById[c].name, description: allCyberById[c].description })}
+                        className="character-cyberware">
+                        {allCyberById[c].name}
+                    </div>)}
+                </div>
+            })
+        }
+
+
+        {
+            focusedItem && <div className="sidepanel">
+                <h1>{focusedItem.name}</h1>
+                <p>{focusedItem.description}</p>
+                <button className="neon-button" onClick={() => setFocusedItem(undefined)}>Close</button>
             </div>
-        })}
-
-
-        {focusedItem && <div className="sidepanel">
-            <h1>{focusedItem.name}</h1>
-            <p>{focusedItem.description}</p>
-            <button className="neon-button" onClick={() => setFocusedItem(undefined)}>Close</button>
-        </div>}
+        }
 
         {openModal === "initiative" && <InitiativeModal character={character} closeModal={() => setOpenModal("")} />}
         {openModal === "damage" && <DamageModal character={character} setCharacter={setCharacter} closeModal={() => setOpenModal("")} />}
 
         {openModal === "attack" && <AttackModal setCharacter={setCharacter} character={character} weapon={focusedWeapon!!} closeModal={() => setOpenModal("")} />}
-    </div>;
+
+        {openModal === "stat" && <StatModal character={character} stat={focusedStat} closeModal={() => setOpenModal("")} />}
+    </div >;
 };

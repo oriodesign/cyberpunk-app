@@ -43,6 +43,7 @@ const App: React.FC = () => {
       {!!character && route === "select-skills" && !!character.statsPoints && !!character.role && <DistributeSkills setRoute={setRoute} character={character} setCharacter={setCharacter} />}
       {!!character && route === "select-gear" && <SelectGear setRoute={setRoute} character={character} setCharacter={setCharacter} />}
       {!!character && route === "select-cyberware" && <SelectCyber setRoute={setRoute} character={character} setCharacter={setCharacter} />}
+      <div id="modal" />
     </div>
   );
 }

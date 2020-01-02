@@ -76,6 +76,11 @@ export const statisticsList: StatDetail[] = [
     }
 ];
 
+export const statById: { [id: string]: StatDetail } = statisticsList.reduce((acc, curr) => {
+    acc[curr.id] = curr;
+    return acc;
+}, {} as any);
+
 export const statsTitlesMap = statisticsList.reduce((acc, curr) => {
     acc[curr.id] = curr.title;
     return acc;

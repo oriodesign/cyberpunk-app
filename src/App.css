@@ -3,6 +3,7 @@ body {
   background-image: url('/img/bg.jpg');
   background-attachment: fixed;
   background-size: cover;
+  width: 100%;
 }
 
 h1, h2, h3 {

@@ -1,4 +1,4 @@
-export const fumbles = {
+export const fumblesByCategory = {
     combat: [
         {
             range: [1, 4],
@@ -42,43 +42,43 @@ export const fumbles = {
     tech: [
         {
             range: [1, 4],
-            result: ""
+            result: "No fumble. You just can't get it together."
         },
         {
             range: [5, 7],
-            result: ""
+            result: "You not only fail, but you make it worse. You drop the tool you are working with or you lose the grip and you damage the thing you are working on. Raise the difficulty by 5 points to try again."
         },
         {
             range: [8, 10],
-            result: ""
+            result: "Wow. Did you ever blow it! You damaged the device beyond repair. Buy a new one."
         },
     ],
     emp: [
         {
             range: [1, 4],
-            result: ""
+            result: "No fumble, they just won't buy it."
         },
         {
             range: [5, 6],
-            result: ""
+            result: "So much for your people skills! You not only don't convince them; you leave them totally cold (-4 on your next EMP roll) to any other suggestion you might have."
         },
         {
             range: [7, 10],
-            result: ""
+            result: "Yow. You blew it royally. You not only didn't convince them, but now they are actually totally opposed to anything you want to do. Roll 1d10. On 1-4 they attempt to do you physical harm."
         },
     ],
     int: [
         {
             range: [1, 4],
-            result: ""
+            result: "No fumble; You just don't know how to do it."
         },
         {
             range: [5, 7],
-            result: ""
+            result: "You don't know anything about it. You don't know what's going on. Make a convince check with -2 to see if anyone else notices how dumb you are."
         },
         {
             range: [8, 10],
-            result: ""
+            result: "Wow. You are oblivious. You don't only don't know anything about the subject but everyone knows how ignorant you are."
         },
     ]
 };
