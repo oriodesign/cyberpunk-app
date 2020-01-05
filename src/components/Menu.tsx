@@ -17,20 +17,21 @@ export const Menu: FC<Props> = ({ setRoute, character }) => {
     return <div className="menu">
         <div className="menu-inner">
 
-            <MenuItem disabled={false} title="Role" route="select-role" setRoute={setRoute} />
-            <div className="menu-item-separator"></div>
+            {character.status === "completed" && <>
+                <MenuItem disabled={isSkillsDisabled} title="Skills" route="select-skills" setRoute={setRoute} />
+                <MenuItem disabled={isGearDisabled} title="Gear" route="select-gear" setRoute={setRoute} />
+                <MenuItem disabled={isCyberwearDisabled} title="Cyberware" route="select-cyberware" setRoute={setRoute} />
+            </>}
 
-            <MenuItem disabled={false} title="Character Points" route="character-points" setRoute={setRoute} />
-            <div className="menu-item-separator"></div>
 
-            <MenuItem disabled={isSkillsDisabled} title="Skills" route="select-skills" setRoute={setRoute} />
-            <div className="menu-item-separator"></div>
+            {character.status === "creating" && <>
+                <MenuItem disabled={false} title="Role" route="select-role" setRoute={setRoute} />
+                <MenuItem disabled={false} title="Character Points" route="character-points" setRoute={setRoute} />
+                <MenuItem disabled={isSkillsDisabled} title="Skills" route="select-skills" setRoute={setRoute} />
+                <MenuItem disabled={isGearDisabled} title="Gear" route="select-gear" setRoute={setRoute} />
+                <MenuItem disabled={isCyberwearDisabled} title="Cyberware" route="select-cyberware" setRoute={setRoute} />
+            </>}
 
-            <MenuItem disabled={isGearDisabled} title="Gear" route="select-gear" setRoute={setRoute} />
-            <div className="menu-item-separator"></div>
-
-            <MenuItem disabled={isCyberwearDisabled} title="Cyberware" route="select-cyberware" setRoute={setRoute} />
-            <div className="menu-item-separator"></div>
         </div>
     </div>
 };

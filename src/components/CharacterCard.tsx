@@ -6,13 +6,16 @@ import { statAbbr } from '../model/statistics';
 import { StatValue } from './StatValue';
 import { DamageBar } from './DamageBar';
 import { InitiativeModal } from './InitiativeModal';
-import { skillTitlesMap, skillStatMap, skillDescriptionMap } from '../model/skills';
+import { skillTitlesMap, skillStatMap, skillDescriptionMap, skillMap } from '../model/skills';
 import { allItemsById, Weapon } from '../model/gear';
 import { getWeapons, getArmorEncumberance, getArmorStoppingPower, getAllCharacterCyber, getTotalGearWeight, applyModifiers } from '../repository/characterRepository';
 import { allCyberById, characterCyber } from '../model/cyberware';
 import { DamageModal } from './DamageModal';
 import { AttackModal } from './AttackModal';
 import { StatModal } from './StatModal';
+import { SkillModal } from './SkillModal';
+import { AttackMartialArtModal } from './AttackMartialArtModal';
+import { AttackMeleeModal } from './AttackMeleeModal';
 
 type Props = {
     character: Partial<Character>;
@@ -30,6 +33,7 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
     const [focusedItem, setFocusedItem] = useState<FocusedItem>();
     const [focusedWeapon, setFocusedWeapon] = useState<Weapon>();
     const [focusedStat, setFocusedStat] = useState<string>("");
+    const [focusedSkill, setFocusedSkill] = useState<string>("");
     const character = applyModifiers(baseCharacter);
 
     const derivedStats = character.statistics ? deriveStats(character.statistics) : undefined;
@@ -155,7 +159,7 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
                 {Object.keys(character.skills).map(k =>
                     <div
                         key={k}
-                        onClick={() => setFocusedItem({ name: skillTitlesMap[k], description: skillDescriptionMap[k] })}
+                        onClick={() => { setFocusedSkill(k); setOpenModal(skillMap[k].isAttack ? "attackMartial" : "skill"); }}
                         className="character-skill">
                         <div className="character-skill-name">{skillTitlesMap[k]}</div>
                         <div className="character-skill-value">+{character.skills!![k] + ((character.statistics as any)[skillStatMap[k]] || 0)}</div>
@@ -185,7 +189,7 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
                 <tbody>
                     {(getWeapons(character)).map(i => <tr
                         key={i.id}
-                        onClick={() => { setFocusedWeapon(i.weapon); setOpenModal("attack"); }}
+                        onClick={() => { setFocusedWeapon(i.weapon); setOpenModal(i.weapon.type === "melee" ? "attackMelee" : "attack"); }}
                         className="character-weapon">
                         <td className="character-weapon-name">{i.weapon.name}</td>
                         <td className="character-weapon-type">{i.weapon.type}</td>
@@ -250,7 +254,11 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
         {openModal === "damage" && <DamageModal character={character} setCharacter={setCharacter} closeModal={() => setOpenModal("")} />}
 
         {openModal === "attack" && <AttackModal setCharacter={setCharacter} character={character} weapon={focusedWeapon!!} closeModal={() => setOpenModal("")} />}
+        {openModal === "attackMartial" && <AttackMartialArtModal setCharacter={setCharacter} character={character} skill={focusedSkill} closeModal={() => setOpenModal("")} />}
+        {openModal === "attackMelee" && <AttackMeleeModal setCharacter={setCharacter} character={character} weapon={focusedWeapon!!} closeModal={() => setOpenModal("")} />}
 
         {openModal === "stat" && <StatModal character={character} stat={focusedStat} closeModal={() => setOpenModal("")} />}
+
+        {openModal === "skill" && <SkillModal character={character} skill={focusedSkill} closeModal={() => setOpenModal("")} />}
     </div >;
 };

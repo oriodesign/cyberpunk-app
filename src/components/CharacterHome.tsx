@@ -11,10 +11,30 @@ type Props = {
 }
 
 export const CharacterHome: FC<Props> = ({ character, setRoute, setCharacter }) => {
+    const isCreating = character.status === "creating";
+
+    function publish() {
+        setCharacter({
+            ...character,
+            status: "completed"
+        })
+    }
+
+    function unpublish() {
+        setCharacter({
+            ...character,
+            status: "creating"
+        })
+    }
+
     return <div className="character-home">
         <div className="row">
             <div className="left-col">
                 <CharacterCard setCharacter={setCharacter} character={character} />
+
+                <div className="separator" />
+                {isCreating && <div onClick={() => publish()} className="neon-button">Publish Character</div>}
+                {!isCreating && <div onClick={() => unpublish()} className="neon-button danger">Un-Publish Character</div>}
             </div>
             <div className="right-col">
                 <Menu character={character} setRoute={setRoute} />

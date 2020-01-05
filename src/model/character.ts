@@ -1,7 +1,10 @@
 import { Roles } from "./role";
 
+export type CharacterStatus = "creating" | "completed";
+
 export type Character = {
     id: string;
+    status: CharacterStatus;
     name: string;
     role: Roles;
     statsPoints: number;

@@ -7,6 +7,7 @@ export type SkillDetail = {
     description: string;
     stat?: StatIds;
     special?: Roles;
+    isAttack?: boolean;
     career: Roles[];
 };
 
@@ -433,6 +434,7 @@ export const refSkills: SkillDetail[] = [
         title: "Brawling",
         description: `The skill of fighting man to man with fist, feet and other parts of the body. Brawling is not a trained skill - it is learned on the Street by getting into a lot of fights. Unlike Martial Arts, there are no specialized attacks and no damage bonuses based on level of mastery.`,
         stat: StatIds.reflexes,
+        isAttack: true,
         career: [RoleIds.solo, RoleIds.nomad, RoleIds.cop, RoleIds.rockerboy, RoleIds.fixer]
     },
     {
@@ -482,6 +484,7 @@ export const refSkills: SkillDetail[] = [
         title: "Aikido",
         description: `This form relies on using the opponent's strength and momentum against him. It is a perfect form for stopping an opponent peacefully while making yourself very hard to hit. Key attacks are: blocks & parries, dodges, throws, holds, escapes, chokes, sweeps, trips & sweeps, grapples.`,
         stat: StatIds.reflexes,
+        isAttack: true,
         career: [RoleIds.solo]
     },
     {
@@ -489,6 +492,7 @@ export const refSkills: SkillDetail[] = [
         title: "Animal Kung Fu",
         description: `There are forms based on animal movements, such as crane, mantis, tiger, leopard and dragon forms. These attacks are fast and dangerous, with a style that is exciting and flashy. Key attacks include: strikes, punches, kicks, blocks & parries, sweeps & trips.`,
         stat: StatIds.reflexes,
+        isAttack: true,
         career: [RoleIds.solo]
     },
     {
@@ -496,6 +500,7 @@ export const refSkills: SkillDetail[] = [
         title: "Boxing",
         description: `The manly art of fisticuffs, this form delivers lightning punches and tight blocking defense. Key attacks are: punches, blocks & parries.`,
         stat: StatIds.reflexes,
+        isAttack: true,
         career: [RoleIds.solo]
     },
     {
@@ -503,6 +508,7 @@ export const refSkills: SkillDetail[] = [
         title: "Capoeira",
         description: `Created by Caribbean slaves, this form combines dancelike movements with fast kicks and low line sweeps. It is a relatively unknown form and can be combined with dance moves to disguise it's true power. Key attacks are: punches, kicks, blocks & parries, dodges, and sweeps & trips.`,
         stat: StatIds.reflexes,
+        isAttack: true,
         career: [RoleIds.solo]
     },
     {
@@ -510,6 +516,7 @@ export const refSkills: SkillDetail[] = [
         title: "Choi Li Fut",
         description: `Descended directly form the ancient Shaolin temples, this form combines powerful roundhouse blows and sweeping kicks into dynamic fighting style. Key attacks are: strikes, punches, kicks, blocks & parries, dodges, throws, and sweeps & trips.`,
         stat: StatIds.reflexes,
+        isAttack: true,
         career: [RoleIds.solo]
     },
     {
@@ -517,6 +524,7 @@ export const refSkills: SkillDetail[] = [
         title: "Judo",
         description: `This system was designed as a sport form, but is very effective in combat as well. It uses throws and sweeps to knock down the opponent. Key attacks include dodges, throws, holds, escape sweeps & trips and grappling.`,
         stat: StatIds.reflexes,
+        isAttack: true,
         career: [RoleIds.solo]
     },
     {
@@ -524,6 +532,7 @@ export const refSkills: SkillDetail[] = [
         title: "Karate",
         description: `The Japanese version of kung fu, this style uses straight line movements and powerful blows. Variations include shotokan and kenpo, each with their own special moves. Key attacks are: punches, kicks, and blocks & parries.`,
         stat: StatIds.reflexes,
+        isAttack: true,
         career: [RoleIds.solo]
     },
     {
@@ -531,6 +540,7 @@ export const refSkills: SkillDetail[] = [
         title: "Tae Kwon Do",
         description: `A very fast and precise form, with graceful movements and some aerial kicks. Key attacks include: strikes, punches, kicks, blocks & parries, dodges.`,
         stat: StatIds.reflexes,
+        isAttack: true,
         career: [RoleIds.solo]
     },
     {
@@ -538,6 +548,7 @@ export const refSkills: SkillDetail[] = [
         title: "Thai Kick Boxing",
         description: `One of the deadliest form in existence, this style is known for blinding kicks delivered with incredible power. Key moves include: strikes, punches, kicks, blocks & parries.`,
         stat: StatIds.reflexes,
+        isAttack: true,
         career: [RoleIds.solo]
     },
     {
@@ -545,6 +556,7 @@ export const refSkills: SkillDetail[] = [
         title: "Wrestling",
         description: `This form combines techniques of Olympic and Professional wrestling. The style uses a wide variety of throws and holds to incapacitate the opponent. Key attacks include: throws, holds, escapes, chokes, sweeps, trips, and grapple.`,
         stat: StatIds.reflexes,
+        isAttack: true,
         career: [RoleIds.solo]
     },
     {
@@ -784,6 +796,11 @@ export const skillStatMap = allSkillDetails.reduce((acc, curr) => {
 
 export const skillDescriptionMap = allSkillDetails.reduce((acc, curr) => {
     acc[curr.id] = curr.description;
+    return acc;
+}, {} as any);
+
+export const skillMap = allSkillDetails.reduce((acc, curr) => {
+    acc[curr.id] = curr;
     return acc;
 }, {} as any);
 

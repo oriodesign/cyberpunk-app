@@ -17,4 +17,5 @@ export const diceMap: { [id: string]: DiceRoll } = {
     "1d6/2": { min: 1, max: 3, count: 1, bonus: 0 },
     "2d6": { min: 1, max: 6, count: 2, bonus: 0 },
     "3d6": { min: 1, max: 6, count: 3, bonus: 0 },
+    "4d6": { min: 1, max: 6, count: 4, bonus: 0 },
 };

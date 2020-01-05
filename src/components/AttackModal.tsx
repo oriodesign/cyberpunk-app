@@ -5,7 +5,8 @@ import { Modal } from './Modal';
 import { DiceRoller } from './DiceRoller';
 import { Character } from '../model/character';
 import { Weapon } from '../model/gear';
-import { diceMap } from '../model/dice';
+import { diceMap, getRandomInt } from '../model/dice';
+import { typeSkillMap, getFumbleLabel, calculateFinalDamage, modifiersList, bodyPartList } from '../model/attack';
 
 type Props = {
     character: Partial<Character>;
@@ -14,145 +15,26 @@ type Props = {
     closeModal: () => void;
 }
 
-const typeSkillMap = {
-    pistol: "handgun",
-    submachinegun: "submachinegun",
-    rifle: "rifle",
-    shotgun: "shotgun",
-    heavyWeapon: "heavyWeapon",
-    exotic: "exotic",
-    melee: "melee"
-};
-
-const modifiersList = [
-    {
-        id: "fast",
-        label: "Fast Draw",
-        bonus: -3
-    },
-    {
-        id: "immobile",
-        label: "Target Immobile",
-        bonus: 4
-    },
-    {
-        id: "ambush",
-        label: "Ambush",
-        bonus: 5
-    },
-    {
-        id: "mov10",
-        label: "Moving Target REF > 10",
-        bonus: -3
-    },
-    {
-        id: "mov12",
-        label: "Moving Target REF > 12",
-        bonus: -4
-    },
-    {
-        id: "mov14",
-        label: "Moving Target REF > 14",
-        bonus: -5
-    },
-    {
-        id: "bodyPart",
-        label: "Aimed at body part",
-        bonus: -4
-    },
-    {
-        id: "ricochet",
-        label: "Ricochet",
-        bonus: -5
-    },
-    {
-        id: "blinded",
-        label: "Blinded by light or dust",
-        bonus: -3
-    },
-    {
-        id: "silhoutted",
-        label: "Target Silhoutted",
-        bonus: 2
-    },
-    {
-        id: "turning",
-        label: "Turning to face target",
-        bonus: -2
-    },
-    {
-        id: "2weapon",
-        label: "Using 2 weapons",
-        bonus: -3
-    },
-    {
-        id: "running",
-        label: "Firing while running",
-        bonus: -3
-    },
-    {
-        id: "shoulder",
-        label: "Firing shoulder arms from hip",
-        bonus: -2
-    },
-    {
-        id: "turret",
-        label: "Turret mounted weapon",
-        bonus: 2
-    },
-    {
-        id: "vehicle",
-        label: "Vehicle mounted",
-        bonus: -4
-    },
-    {
-        id: "large",
-        label: "Large Target",
-        bonus: 4
-    },
-    {
-        id: "small",
-        label: "Small Target",
-        bonus: -4
-    },
-    {
-        id: "tiny",
-        label: "Tiny Target",
-        bonus: -6
-    },
-    {
-        id: "laserSight",
-        label: "Laser Sight",
-        bonus: 1
-    },
-    {
-        id: "targetingScope",
-        label: "Targeting Scope",
-        bonus: 1
-    },
-    {
-        id: "smartgun",
-        label: "Smartgun",
-        bonus: 2
-    },
-    {
-        id: "smartgoggles",
-        label: "Smartgoggles",
-        bonus: 2
-    },
-];
 
 export const AttackModal: FC<Props> = ({ closeModal, weapon, character, setCharacter }) => {
     const [distance, setDistance] = useState<number>(15);
     const [aiming, setAiming] = useState<number>(0);
     const [autoSetting, setAutoSetting] = useState<string>("no");
+    const [bulletType, setBulletType] = useState<string>("standard");
+
+    const [targetCover, setTargetCover] = useState<number>(0);
+    const [targetBtm, setTargetBtm] = useState<number>(0);
+    const [targetArmor, setTargetArmor] = useState<number>(0);
+
     const [result, setResult] = useState<number>();
+    const [bodyPart, setBodyPart] = useState<number>();
+    const [fumble, setFumble] = useState<number>();
     const [damage, setDamage] = useState<number>();
     const [targets, setTargets] = useState<number>(1);
     const [fireZoneWidth, setFireZoneWidth] = useState<number>(2);
-
     const [modifiers, setModifiers] = useState<{ [id: string]: boolean }>({});
 
+    const isAutomatic = weapon.rateOfFire > 2;
     const ref: number = character.statistics!!.reflexes;
     const weaponSkill: number = character.skills!![typeSkillMap[weapon.type]] || 0;
 
@@ -163,8 +45,8 @@ export const AttackModal: FC<Props> = ({ closeModal, weapon, character, setChara
         bonus += 3;
     }
 
+    const bulletsPerTarget = Math.floor(weapon.rateOfFire / targets);
     if (autoSetting === "full-auto") {
-        const bulletsPerTarget = Math.floor(weapon.rateOfFire / targets);
         if (distance === 15) {
             bonus += Math.floor(bulletsPerTarget / 10);
         }
@@ -179,30 +61,33 @@ export const AttackModal: FC<Props> = ({ closeModal, weapon, character, setChara
         }
     });
 
+    const isFumble = result ? ((result - bonus) === 1) : false;
+    const fumbleLabel = fumble ? getFumbleLabel(weapon, fumble) : undefined;
+
+    const finalDamage = damage && bodyPart ? calculateFinalDamage(damage, targetArmor, targetCover, targetBtm, bulletType, bodyPart) : null;
+
     return <Modal>
-        <h1>Damage</h1>
+        <h1>Attack</h1>
 
         <div className="separator" />
 
         <div className="row">
             <div className="left-col">
 
-
-
-                <div className="form-field">
-                    <label>Targets</label>
-                    <input type="number" value={targets} onChange={e => setTargets(Number(e.target.value))} />
-                </div>
-
                 <div className="form-field">
                     <label>Auto Settings</label>
                     <select value={autoSetting} onChange={e => setAutoSetting(e.target.value)}>
                         <option value="no">No</option>
-                        <option value="full-auto">Full-Auto</option>
-                        <option value="three-round-burst">Three Round Burst</option>
-                        <option value="suppressive-fire">Suppressive Fire</option>
+                        {isAutomatic && <option value="full-auto">Full-Auto</option>}
+                        {isAutomatic && <option value="three-round-burst">Three Round Burst</option>}
+                        {isAutomatic && <option value="suppressive-fire">Suppressive Fire</option>}
                     </select>
                 </div>
+
+                {autoSetting === "full-auto" && <div className="form-field">
+                    <label>Targets</label>
+                    <input type="number" value={targets} onChange={e => setTargets(Number(e.target.value))} />
+                </div>}
 
                 {autoSetting === "suppressive-fire" && <div className="form-field">
                     <label>Fire Zone Width</label>
@@ -236,6 +121,14 @@ export const AttackModal: FC<Props> = ({ closeModal, weapon, character, setChara
                     </select>
                 </div>
 
+                <div className="form-field">
+                    <label>Bullet Type</label>
+                    <select value={aiming} onChange={e => setBulletType(e.target.value)}>
+                        <option value="standard">Standard</option>
+                        <option value="armor-piercing">Armor Piercing</option>
+                    </select>
+                </div>
+
             </div>
             <div className="right-col">
                 <div className="form-field">
@@ -259,6 +152,9 @@ export const AttackModal: FC<Props> = ({ closeModal, weapon, character, setChara
 
         <div className="form-field">
             <label>Hit Roll</label>
+
+            {autoSetting === "full-auto" && <p>You hit each target with {bulletsPerTarget} bullets. Roll for each target individually.</p>}
+
             <DiceRoller
                 critical={true}
                 onRolled={setResult}
@@ -269,11 +165,70 @@ export const AttackModal: FC<Props> = ({ closeModal, weapon, character, setChara
                 bonus={bonus} />
 
             {result && <p>Result: {result} vs {distance}. {result >= distance ? "Success" : "Failure"}</p>}
+            {isFumble && <p>Fumble! Do a Fumble Roll!</p>}
+            {result && autoSetting === "three-round-burst" && result >= distance && <p>You hit the target with {getRandomInt(1, 3)} bullets.</p>}
+            {result && autoSetting === "full-auto" && result >= distance && <p>You hit the target with {result - distance} bullets.</p>}
             {autoSetting === "suppressive-fire" && <p>
                 Who enters the fire zone must make a Save roll:<strong>Athletic + Ref + 1d10</strong><br />
                 The difficult is number of rounds / fire zone width = {Math.floor(weapon.rateOfFire / fireZoneWidth)}<br />
                 The target gets 1d6 rounds on failure.
-        </p>}
+            </p>}
+        </div>
+
+        {isFumble && <div className="form-field">
+            <label>Fumble Roll</label>
+            <DiceRoller
+                critical={false}
+                onRolled={setFumble}
+                count={1}
+                reroll={true}
+                min={1}
+                max={10}
+                bonus={0} />
+            {fumbleLabel && <p>Fumble Result: {fumbleLabel}</p>}
+        </div>}
+
+        <div className="form-field">
+            <label>Body Part Roll</label>
+            <DiceRoller
+                critical={false}
+                onRolled={setBodyPart}
+                count={1}
+                reroll={true}
+                min={1}
+                max={10}
+                bonus={0} />
+            {bodyPart && <p>Body Part: {bodyPartList[bodyPart]}</p>}
+        </div>
+
+
+        <div className="separator" />
+
+        <h1>Damage</h1>
+
+        <div className="form-field">
+            <label>Target Cover</label>
+            <select value={targetCover} onChange={e => setTargetCover(Number(e.target.value))}>
+                <option value={0}>None</option>
+                <option value={5}>Wood Door, Sheetrock Wall</option>
+                <option value={10}>Concrete block Wall, Car body, Car Door</option>
+                <option value={15}>Heavy Wood Door</option>
+                <option value={20}>Steel Door</option>
+                <option value={25}>Brick Wall, Curb, Mailbox</option>
+                <option value={30}>Stone Wall, Large Tree</option>
+                <option value={35}>Hydrant</option>
+                <option value={40}>Armored Car body, AV-4 Body</option>
+            </select>
+        </div>
+
+        {bodyPart && <div className="form-field">
+            <label>Target Armor for {bodyPartList[bodyPart]}</label>
+            <input type="number" value={targetArmor} onChange={e => setTargetArmor(Number(e.target.value))} />
+        </div>}
+
+        <div className="form-field">
+            <label>Target Body Type Modifier</label>
+            <input type="number" value={targetBtm} onChange={e => setTargetBtm(Number(e.target.value))} />
         </div>
 
         <div className="form-field">
@@ -286,7 +241,10 @@ export const AttackModal: FC<Props> = ({ closeModal, weapon, character, setChara
                 max={diceMap[weapon.damage].max}
                 bonus={0} />
 
-            {damage && <p>Result: {damage}</p>}
+            {damage && <p>Base Roll: {damage}</p>}
+            {finalDamage && <p>Damage inflicted: {finalDamage}</p>}
+            {damage && damage > 8 && <p>Limb Loss: The body part is severed or crushed beyond recognition. Make a Death save at Mortal 0.</p>}
+
         </div>
 
         <div className="separator" />

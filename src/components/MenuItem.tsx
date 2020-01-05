@@ -11,7 +11,10 @@ export const MenuItem: FC<Props> = ({ title, route, setRoute, disabled }) => {
 
     const className = `menu-item neon-button ${disabled && "disabled"}`;
 
-    return <div onClick={() => !disabled && setRoute(route)} className={className}>
-        {title}
-    </div>
+    return <>
+        <div onClick={() => !disabled && setRoute(route)} className={className}>
+            {title}
+        </div>
+        <div className="menu-item-separator"></div>
+    </>
 };

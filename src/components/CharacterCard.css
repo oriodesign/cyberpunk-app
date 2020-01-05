@@ -209,3 +209,9 @@ td.character-weapon-name {
         padding: 10px;
     }
 }
+
+@media print {
+    .character-card {
+        max-width: unset;
+    }
+}

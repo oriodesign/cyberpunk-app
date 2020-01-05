@@ -1,31 +1,5 @@
-export const fumblesByCategory = {
-    combat: [
-        {
-            range: [1, 4],
-            result: "No fumble. You just screw up."
-        },
-        {
-            range: [5, 5],
-            result: "You drop your weapon."
-        },
-        {
-            range: [6, 6],
-            result: "Weapon discharges (make reliability roll for non autoweapon) or strikes something harmless.",
-        },
-        {
-            range: [7, 7],
-            result: "Weapon jams. Make reliability roll for non autoweapon) or imbeds itself in the ground for 1 turn.",
-        },
-        {
-            range: [8, 8],
-            result: "You manage to wound youself. Roll a location"
-        },
-        {
-            range: [9, 10],
-            result: "You manage to wound a member of your party."
-        }
-    ],
-    reflex: [
+export const fumblesByStat = {
+    reflexes: [
         {
             range: [1, 4],
             result: "No fumble. You just mess up and make an idiot of youself."
@@ -39,7 +13,7 @@ export const fumblesByCategory = {
             result: "You fail abysmally. Take 1d6 damage and make a Save vs Stun with -1."
         },
     ],
-    tech: [
+    technicalAbility: [
         {
             range: [1, 4],
             result: "No fumble. You just can't get it together."
@@ -53,7 +27,7 @@ export const fumblesByCategory = {
             result: "Wow. Did you ever blow it! You damaged the device beyond repair. Buy a new one."
         },
     ],
-    emp: [
+    empathy: [
         {
             range: [1, 4],
             result: "No fumble, they just won't buy it."
@@ -67,7 +41,7 @@ export const fumblesByCategory = {
             result: "Yow. You blew it royally. You not only didn't convince them, but now they are actually totally opposed to anything you want to do. Roll 1d10. On 1-4 they attempt to do you physical harm."
         },
     ],
-    int: [
+    intelligence: [
         {
             range: [1, 4],
             result: "No fumble; You just don't know how to do it."
@@ -82,3 +56,8 @@ export const fumblesByCategory = {
         },
     ]
 };
+
+export function findFumble(stat: string, roll: number): string {
+    const fumbleForSkill = (fumblesByStat as any)[stat];
+    return fumbleForSkill.find((f: { range: number[], result: string }) => f.range[1] >= roll && f.range[0] <= roll).result
+}
