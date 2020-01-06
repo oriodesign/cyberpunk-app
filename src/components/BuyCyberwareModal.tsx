@@ -3,8 +3,8 @@ import React, { FC } from 'react';
 import './Modal.css';
 import { Modal } from './Modal';
 import { Cyberware } from '../model/cyberware';
-import { diceMap } from '../model/dice';
 import { DiceRoller } from './DiceRoller';
+import { diceMap } from '../data/diceData';
 
 type Props = {
     cyberware: Cyberware;

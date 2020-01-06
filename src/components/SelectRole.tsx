@@ -1,9 +1,11 @@
 import React, { FC, useState } from 'react';
-import { roles, Role } from '../model/role';
+import { Role } from '../model/role';
 import { RoleOption } from './RoleOption';
 import { Character } from '../model/character';
 import './SelectRole.css';
-import { allSkillDetails } from '../model/skills';
+import { roles } from '../data/roleData';
+import { allSkillDetails } from '../data/skillData';
+
 type Props = {
     character: Partial<Character>;
     setCharacter: (c: Partial<Character>) => void;

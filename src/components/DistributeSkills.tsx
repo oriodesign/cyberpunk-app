@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react';
 import './DistributeSkills.css';
 import { Character, CharacterSkills } from '../model/character';
-import { allSkillDetails, SkillDetail } from '../model/skills';
+import { SkillDetail } from '../model/skills';
 import { SkillBar } from './SkillBar';
-import { statisticsList } from '../model/statistics';
+
 import { getStartingCash, getStartingJobTitle } from '../repository/characterRepository';
+import { allSkillDetails } from '../data/skillData';
+import { statisticsList } from '../data/statData';
 
 type Props = {
     character: Partial<Character>;

@@ -4,7 +4,8 @@ import './AttackMartialArtModal.css';
 import { Modal } from './Modal';
 import { DiceRoller } from './DiceRoller';
 import { Character } from '../model/character';
-import { AttackType, martialAttackList, martialArtBonus, meleeBtmDamageBonus } from '../model/attack';
+import { AttackType } from '../model/attack';
+import { martialAttackList, martialArtBonus, meleeBtmDamageBonus } from '../data/attackData';
 
 type Props = {
     character: Partial<Character>;

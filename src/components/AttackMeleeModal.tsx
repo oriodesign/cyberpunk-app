@@ -4,9 +4,11 @@ import './AttackMeleeModal.css';
 import { Modal } from './Modal';
 import { DiceRoller } from './DiceRoller';
 import { Character } from '../model/character';
-import { AttackType, meleeAttackList, meleeBtmDamageBonus } from '../model/attack';
+import { AttackType } from '../model/attack';
 import { Weapon } from '../model/gear';
-import { diceMap } from '../model/dice';
+import { meleeAttackList, meleeBtmDamageBonus } from '../data/attackData';
+import { diceMap } from '../data/diceData';
+
 
 type Props = {
     character: Partial<Character>;

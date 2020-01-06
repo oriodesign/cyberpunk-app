@@ -1,5 +1,5 @@
 import React, { FC, useState, useRef, useEffect } from "react";
-import { getRandomInt } from "../model/dice";
+import { getRandomInt } from "../util/math";
 
 type Props = {
     min: number;

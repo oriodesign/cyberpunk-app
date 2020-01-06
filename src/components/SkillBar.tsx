@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import './SkillBar.css';
 import { SkillDetail } from "../model/skills";
-import { statAbbr } from "../model/statistics";
+import { statAbbr } from "../data/statData";
 
 type Props = {
     skillDetail: SkillDetail;

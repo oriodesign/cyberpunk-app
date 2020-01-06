@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 
 import './CyberBodyPart.css';
-import { BodyPartDetail, cyberSurgeryDetail } from '../model/cyberware';
+import { BodyPartDetail } from '../model/cyberware';
 import { Character } from '../model/character';
+import { cyberSurgeryDetail } from '../data/cyberwareData';
 
 type Props = {
     bodyPartDetail: BodyPartDetail;

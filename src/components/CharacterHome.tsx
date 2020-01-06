@@ -35,6 +35,7 @@ export const CharacterHome: FC<Props> = ({ character, setRoute, setCharacter }) 
                 <div className="separator" />
                 {isCreating && <div onClick={() => publish()} className="neon-button">Publish Character</div>}
                 {!isCreating && <div onClick={() => unpublish()} className="neon-button danger">Un-Publish Character</div>}
+                <div className="separator" />
             </div>
             <div className="right-col">
                 <Menu character={character} setRoute={setRoute} />

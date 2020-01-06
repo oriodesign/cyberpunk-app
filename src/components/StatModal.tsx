@@ -3,8 +3,8 @@ import React, { FC, useEffect, useState } from 'react';
 import './StatModal.css';
 import { Modal } from './Modal';
 import { Character } from '../model/character';
-import { statById } from '../model/statistics';
 import { DiceRoller } from './DiceRoller';
+import { statById } from '../data/statData';
 
 type Props = {
     character: Partial<Character>;

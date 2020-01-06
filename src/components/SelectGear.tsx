@@ -1,9 +1,11 @@
 import React, { FC, useState } from 'react';
 import './SelectGear.css';
 import { Character, CharacterItem } from '../model/character';
-import { GearType, shopInventory, Weapon, Item, Armor, allItemsById } from '../model/gear';
+import { GearType, Weapon, Item, Armor } from '../model/gear';
 import uuid from 'uuid/v4';
 import { getTotalGearWeight } from '../repository/characterRepository';
+import { Program } from '../model/netrunner';
+import { shopInventory, allItemsById } from '../data/gearData';
 
 
 type Props = {
@@ -63,7 +65,7 @@ export const SelectGear: FC<Props> = ({ character, setCharacter, setRoute }) => 
         const newItems: CharacterItem[] = [];
         Object.keys(cart).forEach(k => {
             for (let i = 0; i < cart[k]; i++) {
-                newItems.push({ id: uuid(), itemId: k })
+                newItems.push({ id: uuid(), itemId: k, stash: false })
             }
         });
 
@@ -116,6 +118,13 @@ export const SelectGear: FC<Props> = ({ character, setCharacter, setRoute }) => 
                         <div className={className("grocery")} onClick={() => setGearType("grocery")}>Groceries</div>
                         <div className={className("housing")} onClick={() => setGearType("housing")}>Housing</div>
                     </div>
+
+                    <div className="macro-gear-type">
+                        <h1>Netrunner Gear</h1>
+                        <div className={className("cyberdeck")} onClick={() => setGearType("cyberdeck")}>Cyberdecks</div>
+                        <div className={className("cyberdeckOption")} onClick={() => setGearType("cyberdeckOption")}>Deck Options</div>
+                        <div className={className("program")} onClick={() => setGearType("program")}>Programs</div>
+                    </div>
                 </div>
 
             </div>
@@ -124,6 +133,14 @@ export const SelectGear: FC<Props> = ({ character, setCharacter, setRoute }) => 
                     <table className="buy-item-list">
 
                         <thead>
+
+                            {!!(items[0] as Program).mu && <tr>
+                                <th></th>
+                                <th></th>
+                                <th>MU</th>
+                                <th>Strength</th>
+                                <th></th>
+                            </tr>}
 
                             {!!(items[0] as Weapon).damage && <tr>
                                 <th></th>
@@ -151,6 +168,20 @@ export const SelectGear: FC<Props> = ({ character, setCharacter, setRoute }) => 
                         <tbody>
 
                             {items.map((i, index) => {
+
+                                if ((i as Program).mu) {
+
+                                    const category = index === 0 || ((items[index - 1] as Program).category !== (i as Program).category) ? (i as Program).category : "";
+
+
+                                    return <tr className="buy-item" key={i.id}>
+                                        <td className="buy-item-category">{category}</td>
+                                        <td onClick={() => setFocusedItem(i)} className="buy-item-name">{i.name}</td>
+                                        <td>{(i as Program).mu}</td>
+                                        <td>{(i as Program).strength}</td>
+                                        <td className="buy-item-button" onClick={() => buy(i)}>Buy {i.cost}$</td>
+                                    </tr>
+                                }
 
                                 if ((i as Weapon).damage) {
                                     const category = index === 0 || ((items[index - 1] as Weapon).category !== (i as Weapon).category) ? (i as Weapon).category : "";

@@ -2,9 +2,9 @@ import React, { FC, useState } from 'react';
 import './SkillModal.css';
 import { Character } from '../model/character';
 import { Modal } from './Modal';
-import { skillTitlesMap, skillDescriptionMap, skillStatMap } from '../model/skills';
 import { DiceRoller } from './DiceRoller';
-import { findFumble } from '../model/fumbles';
+import { findFumble } from '../data/fumblesData';
+import { skillStatMap, skillTitlesMap, skillDescriptionMap } from '../data/skillData';
 
 type Props = {
     character: Partial<Character>;

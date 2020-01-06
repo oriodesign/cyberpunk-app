@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 
-import { Cyberware, cyberSurgeryDetail, CyberBodyPart } from '../model/cyberware';
+import { Cyberware, CyberBodyPart } from '../model/cyberware';
 import { Character } from '../model/character';
 
 import './CyberwareItem.css';
+import { cyberSurgeryDetail } from '../data/cyberwareData';
 type Props = {
     item: Cyberware;
     bodyPart: CyberBodyPart;

@@ -1,21 +1,24 @@
 import React, { FC, useState } from 'react';
 import './CharacterCard.css';
-import { Character, deriveStats } from '../model/character';
-import { rolesTitlesMap } from '../model/role';
-import { statAbbr } from '../model/statistics';
 import { StatValue } from './StatValue';
 import { DamageBar } from './DamageBar';
 import { InitiativeModal } from './InitiativeModal';
-import { skillTitlesMap, skillStatMap, skillDescriptionMap, skillMap } from '../model/skills';
-import { allItemsById, Weapon } from '../model/gear';
 import { getWeapons, getArmorEncumberance, getArmorStoppingPower, getAllCharacterCyber, getTotalGearWeight, applyModifiers } from '../repository/characterRepository';
-import { allCyberById, characterCyber } from '../model/cyberware';
 import { DamageModal } from './DamageModal';
 import { AttackModal } from './AttackModal';
 import { StatModal } from './StatModal';
 import { SkillModal } from './SkillModal';
 import { AttackMartialArtModal } from './AttackMartialArtModal';
 import { AttackMeleeModal } from './AttackMeleeModal';
+import { ItemModal } from './ItemModal';
+import { Character, CharacterItem } from '../model/character';
+import { Weapon } from '../model/gear';
+import { deriveStats } from '../rules/statRules';
+import { rolesTitlesMap } from '../data/roleData';
+import { statAbbr } from '../data/statData';
+import { characterCyber, allCyberById } from '../data/cyberwareData';
+import { skillTitlesMap, skillMap, skillStatMap } from '../data/skillData';
+import { allItemsById } from '../data/gearData';
 
 type Props = {
     character: Partial<Character>;
@@ -31,6 +34,7 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
 
     const [openModal, setOpenModal] = useState<string>();
     const [focusedItem, setFocusedItem] = useState<FocusedItem>();
+    const [focusedCharacterItem, setFocusedCharacterItem] = useState<CharacterItem>();
     const [focusedWeapon, setFocusedWeapon] = useState<Weapon>();
     const [focusedStat, setFocusedStat] = useState<string>("");
     const [focusedSkill, setFocusedSkill] = useState<string>("");
@@ -207,11 +211,23 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
             </table></div>
         }
 
-        {character.inventory && character.inventory.length > 0 && <h3>Inventory ({totalWeight}Kg)</h3>}
+        {character.inventory && character.inventory.filter(i => !i.stash).length > 0 && <h3>Inventory ({totalWeight}Kg)</h3>}
         {
-            character.inventory && character.inventory.length > 0 && <div className="character-inventory-wrapper">
-                {character.inventory.map(item => <div
-                    onClick={() => setFocusedItem({ name: allItemsById[item.itemId].name, description: allItemsById[item.itemId].description || "" })}
+            character.inventory && character.inventory.filter(i => !i.stash).length > 0 && <div className="character-inventory-wrapper">
+                {character.inventory.filter(i => !i.stash).map(item => <div
+                    onClick={() => { setFocusedCharacterItem(item); setOpenModal("item"); }}
+                    key={item.id}
+                    className="character-item">
+                    <div className="character-item-name">{allItemsById[item.itemId].name}</div>
+                </div>)}
+            </div>
+        }
+
+        {character.inventory && character.inventory.filter(i => i.stash).length > 0 && <h3>Stash</h3>}
+        {
+            character.inventory && character.inventory.filter(i => i.stash).length > 0 && <div className="character-inventory-wrapper">
+                {character.inventory.filter(i => i.stash).map(item => <div
+                    onClick={() => { setFocusedCharacterItem(item); setOpenModal("item"); }}
                     key={item.id}
                     className="character-item">
                     <div className="character-item-name">{allItemsById[item.itemId].name}</div>
@@ -260,5 +276,6 @@ export const CharacterCard: FC<Props> = ({ character: baseCharacter, setCharacte
         {openModal === "stat" && <StatModal character={character} stat={focusedStat} closeModal={() => setOpenModal("")} />}
 
         {openModal === "skill" && <SkillModal character={character} skill={focusedSkill} closeModal={() => setOpenModal("")} />}
+        {openModal === "item" && <ItemModal characterItem={focusedCharacterItem!!} character={character} setCharacter={setCharacter} closeModal={() => setOpenModal("")} />}
     </div >;
 };

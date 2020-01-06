@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import './DiceRoller.css';
 import { Dice } from './Dice';
-import { getRandomInt } from '../model/dice';
+import { getRandomInt } from '../util/math';
 
 type Props = {
     count: number;

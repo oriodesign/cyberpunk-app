@@ -1,11 +1,12 @@
 import React, { FC, useState } from 'react';
 import './SelectCyber.css';
 import { Character } from '../model/character';
-import { Cyberware, CyberBodyPart, cyberBodyPartDetails, cyberwareInventory, BodyPartDetail } from '../model/cyberware';
+import { Cyberware, CyberBodyPart, BodyPartDetail } from '../model/cyberware';
 import { BuyBodyPartModal } from './BuyBodyPartModal';
 import { BuyCyberwareModal } from './BuyCyberwareModal';
 import { CyberwareItem } from './CyberwareItem';
 import { CyberBodyPart as Cb } from './CyberBodyPart';
+import { cyberBodyPartDetails, cyberwareInventory } from '../data/cyberwareData';
 
 type Props = {
     character: Partial<Character>;

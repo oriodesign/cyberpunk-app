@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { BodyPartDetail } from '../model/cyberware';
 import { Modal } from './Modal';
-import { diceMap } from '../model/dice';
 import { DiceRoller } from './DiceRoller';
+import { diceMap } from '../data/diceData';
 
 type Props = {
     bodyPart: BodyPartDetail;

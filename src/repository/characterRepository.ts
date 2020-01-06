@@ -1,6 +1,8 @@
 import { CharacterSkills, Character } from "../model/character";
-import { specialSkillsDetails, SkillDetail } from "../model/skills";
-import { allItemsById, Weapon, Armor } from "../model/gear";
+import { SkillDetail } from "../model/skills";
+import { Weapon, Armor } from "../model/gear";
+import { specialSkillsDetails } from "../data/skillData";
+import { allItemsById } from "../data/gearData";
 
 export const roleCash: { [id: string]: number[] } = {
     rockerboy: [1000, 1500, 2000, 5000, 8000, 12000],
@@ -16,7 +18,7 @@ export const roleCash: { [id: string]: number[] } = {
 };
 
 export function getStartingCash(role: string, skills: CharacterSkills): number {
-    const specialSkill: SkillDetail = specialSkillsDetails.find(s => s.special === role)!!;
+    const specialSkill: SkillDetail = specialSkillsDetails.find(s => s.special === role)!! as any;
     const specialSkillValue = skills[specialSkill.id] || 0;
 
     const cashKey = specialSkillValue < 5 ? 0 : specialSkillValue - 5;
@@ -37,7 +39,7 @@ export const roleJobTitle: { [id: string]: string[] } = {
 };
 
 export function getStartingJobTitle(role: string, skills: CharacterSkills): string {
-    const specialSkill: SkillDetail = specialSkillsDetails.find(s => s.special === role)!!;
+    const specialSkill: SkillDetail = specialSkillsDetails.find(s => s.special === role)!! as any;
     const specialSkillValue = skills[specialSkill.id] || 0;
 
     const cashKey = specialSkillValue < 5 ? 0 : specialSkillValue - 5;
@@ -135,8 +137,11 @@ export function getTotalGearWeight(character: Partial<Character>): number {
         return 0;
     }
 
-    return character.inventory.reduce((acc, curr) => acc + (allItemsById[curr.itemId] as any).weight || 0, 0);
+    const result = character.inventory
+        .filter(i => !i.stash)
+        .reduce((acc, curr) => acc + (allItemsById[curr.itemId] as any).weight || 0, 0);
 
+    return Math.round(result);
 }
 
 export function applyModifiers(character: Partial<Character>): Partial<Character> {

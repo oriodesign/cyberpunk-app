@@ -5,8 +5,10 @@ import { Modal } from './Modal';
 import { DiceRoller } from './DiceRoller';
 import { Character } from '../model/character';
 import { Weapon } from '../model/gear';
-import { diceMap, getRandomInt } from '../model/dice';
-import { typeSkillMap, getFumbleLabel, calculateFinalDamage, modifiersList, bodyPartList } from '../model/attack';
+import { typeSkillMap, modifiersList, bodyPartList } from '../data/attackData';
+import { getFumbleLabel, calculateFinalDamage } from '../rules/combatRules';
+import { getRandomInt } from '../util/math';
+import { diceMap } from '../data/diceData';
 
 type Props = {
     character: Partial<Character>;

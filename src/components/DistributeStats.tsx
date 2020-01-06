@@ -1,8 +1,10 @@
 import React, { FC, useState } from 'react';
 import './DistributeStats.css';
-import { Character, CharacterStatistics, deriveStats } from '../model/character';
-import { statisticsList, StatDetail } from '../model/statistics';
+import { Character, CharacterStatistics } from '../model/character';
+import { StatDetail } from '../model/statistics';
 import { StatBar } from './StatBar';
+import { statisticsList } from '../data/statData';
+import { deriveStats } from '../rules/statRules';
 
 
 
